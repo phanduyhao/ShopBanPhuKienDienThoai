@@ -74,6 +74,7 @@ Route::middleware(['auth'])->group(function() {
 
 // Chuyển sang trang checkout
     Route::get('/checkout', [MainCheckoutController::class, 'ShowToCheckout'])->name('checkout.showcheckout');
+Route::post('/cart/check-stock', [MainCartController::class, 'checkStock'])->name('cart.checkStock');
 
 // Thực hiện thanh toán
     Route::post('/process-checkout', [MainCheckoutController::class, 'checkout'])->name('checkout.checkout');

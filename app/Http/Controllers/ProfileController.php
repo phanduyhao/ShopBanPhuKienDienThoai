@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\DB;
+use App\Models\Product;
 class ProfileController extends Controller
 {
     /**
@@ -123,20 +124,51 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function cancel($id)
+
+public function cancel($id)
 {
     $order = Order::findOrFail($id);
 
-    // Kiểm tra nếu đơn hàng chưa hủy và chưa hoàn thành, thì cho phép hủy
     if ($order->status != 4) {
-        $order->status = 4; // Cập nhật trạng thái là "Đã hủy đơn hàng"
-        $order->save();
+        // Bắt đầu transaction để đảm bảo toàn vẹn dữ liệu
+        DB::beginTransaction();
+        try {
+            // Giải mã chuỗi JSON sản phẩm
+            $products = json_decode($order->products, true);
 
-        return redirect()->route('myOrder')->with('success', 'Đơn hàng đã bị hủy!');
+            foreach ($products as $productData) {
+                $slug = $productData['slug'] ?? null;
+                $quantity = $productData['quantity'] ?? 0;
+
+                if ($slug && $quantity > 0) {
+                    // Tìm sản phẩm theo slug
+                    $product = Product::where('slug', $slug)->first();
+
+                    if ($product) {
+                        // Cập nhật số lượng
+                        $currentAmount = (int) $product->Amounts; // đảm bảo kiểu số
+                        $product->Amounts = $currentAmount + $quantity;
+                        $product->save();
+                    }
+                }
+            }
+
+            // Cập nhật trạng thái đơn hàng
+            $order->status = 4;
+            $order->save();
+
+            DB::commit();
+
+            return redirect()->route('myOrder')->with('success', 'Đơn hàng đã bị hủy và sản phẩm đã được hoàn lại kho!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('myOrder')->with('error', 'Lỗi khi hủy đơn hàng: ' . $e->getMessage());
+        }
     }
 
     return redirect()->route('myOrder')->with('error', 'Không thể hủy đơn hàng này!');
 }
+
 
     
 }

@@ -106,16 +106,16 @@ class UsersController extends Controller
         //  }
     }
 
-    public function destroy($id)
-    {
-        $user = User::findOrFail($id);
-        // try {
-            // $this->authorize('delete', $user);
-            $user->delete();
-            return response()->json(['message' => 'Người dùng đã được xóa thành công']);
-        // } catch (AuthorizationException $e) {
-            // abort(403, 'Bạn không có quyền thực hiện hành động này!');
-        // }
-    }
+public function destroy($id)
+{
+    $user = User::findOrFail($id);
+
+    $user->orders()->delete();
+
+    $user->delete();
+
+    return response()->json(['message' => 'Người dùng và các đơn hàng liên quan đã được xóa thành công']);
+}
+
 
 }

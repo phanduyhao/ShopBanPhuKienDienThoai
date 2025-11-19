@@ -105,7 +105,7 @@
                 <!-- End List Title -->
                 <!-- Start Single List -->
                 @foreach($carts as $cart)
-                    <div class="single-item-list text-center border-bottom py-3">
+                    <div class="single-item-list text-center border-bottom py-3" data-cart-id="{{ $cart->id }}">
                         <div class="row align-items-center">
                             <div class="col-1">{{ $loop->iteration }}</div>
                             <div class="col-md-1 col-12">

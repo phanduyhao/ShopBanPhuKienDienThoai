@@ -54,4 +54,37 @@ class MainCartController extends Controller
         return response()->json(['success' => true]);
     }
 
+    public function checkStock(Request $request)
+{
+    $cartUpdates = $request->input('cart_updates');
+    $errors = [];
+
+    foreach ($cartUpdates as $update) {
+        $cart = Cart::find($update['id']);
+
+        if (!$cart || $cart->user_id !== Auth::id()) {
+            $errors[] = "Giỏ hàng không tồn tại hoặc không thuộc quyền.";
+            continue;
+        }
+
+        $product = Product::find($cart->product_id);
+        if (!$product) {
+            $errors[] = "Sản phẩm không tồn tại.";
+            continue;
+        }
+
+        $newQty = $update['quantity'];
+        if ($newQty > $product->Amounts) {
+            $errors[] = "Sản phẩm '{$product->Title}' chỉ còn {$product->Amounts} trong kho.";
+        }
+    }
+
+    if (!empty($errors)) {
+        return response()->json(['success' => false, 'errors' => $errors], 400);
+    }
+
+    return response()->json(['success' => true]);
+}
+
+
 }

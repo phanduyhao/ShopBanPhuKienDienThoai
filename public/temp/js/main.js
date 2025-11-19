@@ -197,52 +197,57 @@ $(document).ready(function () {
 $(document).ready(function () {
     $('#buy-products').click(function(e) {
         e.preventDefault();
-        // Lấy thông tin cần lưu vào sessionStorage
+
         var productInfos = [];
         var cartItems = $('.single-item-list');
-        var hasError = false; // Biến để kiểm tra lỗi
-        
+        var hasError = false;
+
         cartItems.each(function() {
             var thumb = $(this).find('.thumb-product').attr('src');
             var title = $(this).find('.title-product').text();
             var slug = $(this).find('.title-product').attr('href');
             var price = $(this).find('.price-product').text();
-            var quantity = parseInt($(this).find('.quantity').val()); // Chuyển quantity thành số nguyên
+            var quantity = parseInt($(this).find('.quantity').val());
             var subtotal = $(this).find('.subtotal').text();
             var types = $(this).find('.types').text();
+            var cart_id = $(this).data('cart-id'); 
 
-            // Kiểm tra nếu quantity < 1
-            if (quantity < 1) {
-                alert('Số lượng của sản phẩm "' + title + '" phải lớn hơn hoặc bằng 1.');
-                hasError = true; // Đánh dấu rằng có lỗi
-                return false; // Thoát khỏi vòng lặp each
-            }else if(!Number.isInteger(Number(quantity)) ){
-                alert('Số lượng của sản phẩm "' + title + '" phải là số nguyên!');
-                isValid = false;
-                return false; // Thoát khỏi vòng lặp
+            if (quantity < 1 || !Number.isInteger(quantity)) {
+                alert('Số lượng của sản phẩm "' + title + '" phải là số nguyên ≥ 1.');
+                hasError = true;
+                return false;
             }
 
             productInfos.push({ 
-                thumb: thumb, 
-                title: title, 
-                slug: slug, 
-                price: price, 
-                quantity: quantity, 
-                subtotal: subtotal, 
-                types: types 
+                id: cart_id,
+                thumb, title, slug, price, quantity, subtotal, types
             });
         });
 
-        // Nếu có lỗi, không thực hiện chuyển trang
-        if (hasError) {
-            return;
-        }
+        if (hasError) return;
 
-        // Lưu thông tin vào sessionStorage
-        sessionStorage.setItem('productInfos', JSON.stringify(productInfos));
-        window.location.href = '/checkout';
+        $.ajax({
+            url: '/cart/check-stock',
+            method: 'POST',
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                cart_updates: productInfos.map(p => ({ id: p.id, quantity: p.quantity }))
+            },
+            success: function(response) {
+                sessionStorage.setItem('productInfos', JSON.stringify(productInfos));
+                window.location.href = '/checkout';
+            },
+            error: function(xhr) {
+                if (xhr.responseJSON && xhr.responseJSON.errors) {
+                    alert(xhr.responseJSON.errors.join("\n"));
+                } else {
+                    alert('Đã xảy ra lỗi kiểm tra tồn kho.');
+                }
+            }
+        });
     });
 });
+
 
 
 // Hiển thị các sản phẩm ở session lên html
