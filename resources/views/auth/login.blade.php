@@ -66,7 +66,7 @@
                             <div class="button text-center mt-5">
                                 <button type="submit" class="btn btn-dark">Đăng nhập ngay</button>
                             </div>
-                            <p class="outer-link mt-4">Bạn chưa có tài khoản? <a href="{{route('register')}}" class="text-primary">Đăng ký</a>
+                            <p class="outer-link mt-4">Bạn chưa có tài khoản? <a href="/registers" class="text-primary">Đăng ký</a>
                             </p>
                         </form>
                     </div>

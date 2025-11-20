@@ -92,7 +92,9 @@ button:focus,
 textarea:focus {
 	outline: none;
 }
-
+.text-black{
+  color: black !important; 
+}
 a:hover,
 a:focus {
 	text-decoration: none;
@@ -3971,4 +3973,77 @@ ol {
 .banner__item:hover .banner__item__pic::before {
     top: 90%;
     left: 0; /* Di chuyển thanh ánh sáng từ góc trái trên xuống góc dưới phải */
+}
+
+/* Header fade + slide xuống */
+.header-animated {
+    animation: fadeSlideDown 0.8s ease forwards;
+}
+
+@keyframes fadeSlideDown {
+    0% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Icon nhẹ nhàng nhấp nháy */
+.icon-animate {
+    animation: softPulse 1.8s infinite ease-in-out;
+}
+
+@keyframes softPulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.15); opacity: 0.85; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Ô tìm kiếm nổi khi hover */
+.top-search {
+    transition: 0.25s ease;
+}
+
+.top-search:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255,255,255,0.25);
+}
+
+/* Input focus đẹp hơn */
+.top-search input:focus {
+    border-bottom: 2px solid #007bff;
+    transition: 0.2s;
+}
+
+/* Placeholder mờ dần */
+.top-search input::placeholder {
+    transition: 0.3s;
+}
+
+.top-search input:focus::placeholder {
+    opacity: 0.4;
+}
+
+.icon-wiggle {
+    display: inline-block;
+    animation: wiggle 1.5s infinite ease-in-out;
+}
+
+@keyframes wiggle {
+    0%, 100% { transform: translateX(0) rotate(0); }
+    25% { transform: translateX(-2px) rotate(-3deg); }
+    75% { transform: translateX(2px) rotate(3deg); }
+}
+.search-float {
+    animation: floatSearch 3s infinite ease-in-out;
+}
+
+@keyframes floatSearch {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(6px); }
+}
+.text-shake {
+    animation: textShake 2.2s infinite ease-in-out;
+}
+
+@keyframes textShake {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
 }

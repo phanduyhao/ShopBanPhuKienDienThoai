@@ -4,7 +4,7 @@
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="footer__about">
                     <div class="footer__logo">
-                        <a href="#" class=""><img src="/temp/assets/img/logo.png" alt="" width="130"></a>
+                        <a href="#" class=""><img src="/temp/assets/img/logo.png" alt="" width="200"></a>
                     </div>
                     <p>Khách hàng là trung tâm của mô hình kinh doanh độc đáo của chúng tôi, bao gồm thiết kế.</p>
                     <a href="#"><img src="/temp/assets/img/payment.png" alt=""></a>

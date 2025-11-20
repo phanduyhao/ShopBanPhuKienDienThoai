@@ -39,6 +39,8 @@ Route::get('/clear-cache',function(){
 });
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/posts', [MainPostController::class, 'index'])->name('post');
+Route::get('/login', [LoginController::class, 'showLoginForm']);
+Route::get('/registers', [RegisterController::class, 'showRegisterForm']);
 Route::get('/posts/{slug}', [MainPostController::class, 'details'])->name('posts.details');
 
 // Danh sách sản phẩm theo danh mục
