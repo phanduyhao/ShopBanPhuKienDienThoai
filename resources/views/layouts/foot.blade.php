@@ -16,59 +16,59 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
-        var swiper = new Swiper(".mySwiper", {
-      spaceBetween: 10,
-      slidesPerView: 4,
-      freeMode: true,
-      watchSlidesProgress: true,
-    });
-    var swiper2 = new Swiper(".mySwiper2", {
-      spaceBetween: 10,
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-      thumbs: {
-        swiper: swiper,
-      },
-    });
-   $(document).on("submit", "#form-change-password", function (e) {
-    e.preventDefault();
-    let form = $(this);
-    let formData = form.serialize();
+    // var swiper = new Swiper(".mySwiper", {
+    //     spaceBetween: 10,
+    //     slidesPerView: 4,
+    //     freeMode: true,
+    //     watchSlidesProgress: true,
+    // });
+    // var swiper2 = new Swiper(".mySwiper2", {
+    //     spaceBetween: 10,
+    //     navigation: {
+    //         nextEl: ".swiper-button-next",
+    //         prevEl: ".swiper-button-prev",
+    //     },
+    //     thumbs: {
+    //         swiper: swiper,
+    //     },
+    // });
+    
+    $(document).on("submit", "#form-change-password", function(e) {
+        e.preventDefault();
+        let form = $(this);
+        let formData = form.serialize();
 
-    // Xóa lỗi cũ trước khi gửi
-    $(".error-message").text("");
+        // Xóa lỗi cũ trước khi gửi
+        $(".error-message").text("");
 
-    $.ajax({
-        url: form.attr("action"),
-        type: "POST",
-        data: formData,
-        beforeSend: function () {
-            $(".btn-primary").prop("disabled", true);
-        },
-        success: function (response) {
-            $(".btn-primary").prop("disabled", false);
-            alert(response.message); // Hiển thị thông báo thành công
-            form[0].reset(); // Reset form nếu đổi mật khẩu thành công
-        },
-        error: function (xhr) {
-            $(".btn-primary").prop("disabled", false);
-            let errors = xhr.responseJSON.errors;
+        $.ajax({
+            url: form.attr("action"),
+            type: "POST",
+            data: formData,
+            beforeSend: function() {
+                $(".btn-primary").prop("disabled", true);
+            },
+            success: function(response) {
+                $(".btn-primary").prop("disabled", false);
+                alert(response.message); // Hiển thị thông báo thành công
+                form[0].reset(); // Reset form nếu đổi mật khẩu thành công
+            },
+            error: function(xhr) {
+                $(".btn-primary").prop("disabled", false);
+                let errors = xhr.responseJSON.errors;
 
-            // Kiểm tra lỗi cho trường old_password
-            if (errors.old_password) {
-                let errorMessage = errors.old_password[0]; // Lấy lỗi đầu tiên
-                $("input[name='old_password']").next(".error-message").text(errorMessage);
+                // Kiểm tra lỗi cho trường old_password
+                if (errors.old_password) {
+                    let errorMessage = errors.old_password[0]; // Lấy lỗi đầu tiên
+                    $("input[name='old_password']").next(".error-message").text(errorMessage);
+                }
+
+                // Hiển thị lỗi cho các trường khác (new_password, new_password_confirmation)
+                for (let key in errors) {
+                    let errorMessage = errors[key][0]; // Lấy lỗi đầu tiên
+                    $(`input[name="${key}"]`).next(".error-message").text(errorMessage);
+                }
             }
-
-            // Hiển thị lỗi cho các trường khác (new_password, new_password_confirmation)
-            for (let key in errors) {
-                let errorMessage = errors[key][0]; // Lấy lỗi đầu tiên
-                $(`input[name="${key}"]`).next(".error-message").text(errorMessage);
-            }
-        }
+        });
     });
-});
-
 </script>

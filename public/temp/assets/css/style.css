@@ -4047,3 +4047,319 @@ ol {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-2px); }
 }
+
+    /* Menu link đẹp hơn */
+    .header__menu .nav-link {
+        transition: 0.25s;
+    }
+
+    .header__menu .nav-link:hover {
+        color: #ffd369 !important;
+        transform: translateY(-2px);
+    }
+
+    /* Dropdown mượt */
+    .dropdown-menu {
+        animation: fadeIn 0.25s ease;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Dropdown con */
+    .dropdown-submenu {
+        position: relative;
+    }
+
+    .sub-dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-left: 5px;
+    }
+
+    /* Hover highlight item */
+    .dropdown-item {
+        border-radius: 6px;
+        transition: 0.2s;
+    }
+
+    .dropdown-item:hover {
+        background: #f5f5f5;
+        padding-left: 14px;
+    }
+
+    /* Mobile menu button */
+    .canvas__open i {
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .canvas__open i:hover {
+        transform: scale(1.1);
+    }
+
+    /* Bố cục tổng thể mượt hơn */
+    .header__logo img {
+        transition: transform 0.3s;
+    }
+
+    .header__logo img:hover {
+        transform: scale(1.05);
+    }
+
+    .dropdown-hover:hover .dropdown-menu {
+        display: block;
+        margin-top: 0;
+        /* tránh nhảy */
+        transition: all 0.2s ease;
+    }
+
+    /* ========= OVERLAY ========= */
+.mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.55);
+    display: none;
+    z-index: 997;
+    animation: fadeInOverlay 0.25s ease forwards;
+}
+
+@keyframes fadeInOverlay {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ========= SIDEBAR ========== */
+.mobile-sidebar {
+    position: fixed;
+    top: 0;
+    right: -330px;
+    width: 330px;
+    height: 100%;
+    background: #ffffff;
+    z-index: 998;
+    transition: right 0.35s cubic-bezier(.25,.46,.45,1);
+    overflow-y: auto;
+    box-shadow: -4px 0 16px rgba(0,0,0,0.25);
+    border-left: 2px solid #f0f0f0;
+}
+
+.mobile-sidebar.open {
+    right: 0;
+}
+
+/* ========= HEADER ========== */
+.sidebar-header {
+    background: #0d6efd;
+    color: white;
+}
+
+.sidebar-header h5 {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.sidebar-header i {
+    color: white;
+    transition: 0.25s;
+}
+
+.sidebar-header i:hover {
+    transform: rotate(90deg);
+}
+
+/* ========= ACCOUNT AREA ========== */
+.account-block .account-toggle {
+    background: lightgoldenrodyellow;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: 0.25s;
+}
+
+.account-block .account-toggle:hover {
+    background: #eef3ff;
+    border-color: #bcd2ff;
+}
+
+.account-menu {
+    background: #f5f7ff;
+    border: 1px solid #d6ddff;
+    border-radius: 10px;
+    animation: dropMenu 0.25s ease;
+}
+
+@keyframes dropMenu {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.account-menu li a,
+.account-menu button {
+    color: #333;
+    padding: 6px 8px;
+    border-radius: 6px;
+    transition: 0.25s;
+}
+
+.account-menu li a:hover,
+.account-menu button:hover {
+    background: #e7edff;
+}
+
+/* ========= NAV LINKS ========== */
+.sidebar-link {
+    display: block;
+    padding: 10px 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    transition: 0.25s;
+    border-radius: 8px;
+}
+
+.sidebar-link:hover {
+    background: #f4f6ff;
+    padding-left: 8px;
+    color: #0d6efd;
+}
+
+/* ========= SHOP BUTTON ========== */
+.shop-toggle,
+.inner-toggle {
+    background: #f8f9fa;
+    border: 1px solid #e3e3e3;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: 0.25s;
+}
+
+.shop-toggle:hover,
+.inner-toggle:hover {
+    background: #eef3ff;
+    border-color: #bcd2ff;
+}
+
+/* Icon rotate animation */
+.shop-toggle[aria-expanded="true"] i,
+.account-toggle[aria-expanded="true"] i {
+    transform: rotate(180deg);
+}
+
+.shop-toggle i,
+.account-toggle i {
+    transition: 0.25s;
+}
+
+/* ========= SUB MENU (Shop children) ========== */
+.shop-menu,
+.sub-menu {
+    background: #f9f9ff;
+    border-left: 3px solid #0d6efd33;
+    border-radius: 6px;
+    padding-left: 10px;
+    animation: fadeSlide 0.30s ease;
+}
+
+@keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.sub-menu a {
+    padding: 6px 0;
+    padding-left: 6px;
+    font-size: 14px;
+    color: #555;
+}
+
+.sub-menu a:hover {
+    color: #0d6efd;
+    background: #eef3ff;
+}
+
+/* ========= SCROLLBAR (cho đẹp) ========== */
+.mobile-sidebar::-webkit-scrollbar {
+    width: 7px;
+}
+
+.mobile-sidebar::-webkit-scrollbar-thumb {
+    background: #c7c7c7;
+    border-radius: 5px;
+}
+
+.mobile-sidebar::-webkit-scrollbar-track {
+    background: #f2f2f2;
+}
+
+.hero-slider-box {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.slide-img {
+    object-fit: cover;     /* Không méo, không zoom quá đà */
+    border-radius: 10px;
+	aspect-ratio: 2;
+    height: auto;
+    width: 100%;
+}
+
+.banner-box {
+    width: 100%;
+    height: 170px;         /* 2 banner chia đều 350px */
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.banner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.owl-nav, .owl-dot{
+	display: none;
+}
+.hero-right .banner__item{
+	border-radius: 10px;
+}
+.text-decoration-line-through{
+	text-decoration: line-through !important;
+}
+
+    .pagination nav {
+    margin: 0 auto; }
+.pagination nav div:nth-child(1) {
+    display: none; }
+.pagination nav div:nth-child(2) span {
+    box-shadow: none !important; }
+.pagination nav div:nth-child(2) span span span {
+    padding: 10px 14px !important;
+    border: none !important;
+    margin: 0 5px;
+    background-color: #696cff !important;
+    color: white; }
+.pagination nav div:nth-child(2) span a {
+    padding: 10px 14px !important;
+    border: none !important;
+    margin: 0 5px;
+    transition: all .3s; }
+.pagination nav div:nth-child(2) span a:hover {
+    background-color: #696cff !important;
+    color: white;
+    transition: all .3s; }
+.pagination svg {
+    width: 20px; }

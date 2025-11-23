@@ -1,30 +1,5 @@
 @extends('layouts.layout')
 @section('content')
-<style>
-    .pagination nav {
-    margin: 0 auto; }
-.pagination nav div:nth-child(1) {
-    display: none; }
-.pagination nav div:nth-child(2) span {
-    box-shadow: none !important; }
-.pagination nav div:nth-child(2) span span span {
-    padding: 10px 14px !important;
-    border: none !important;
-    margin: 0 5px;
-    background-color: #696cff !important;
-    color: white; }
-.pagination nav div:nth-child(2) span a {
-    padding: 10px 14px !important;
-    border: none !important;
-    margin: 0 5px;
-    transition: all .3s; }
-.pagination nav div:nth-child(2) span a:hover {
-    background-color: #696cff !important;
-    color: white;
-    transition: all .3s; }
-.pagination svg {
-    width: 20px; }
-</style>
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-blog set-bg" data-setbg="/temp/assets/img/breadcrumb-bg.jpg">
         <div class="container">

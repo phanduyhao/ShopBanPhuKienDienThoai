@@ -1,58 +1,73 @@
 <footer class="footer">
     <div class="container">
         <div class="row">
+
+            <!-- Giới thiệu -->
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="footer__about">
                     <div class="footer__logo">
-                        <a href="#" class=""><img src="/temp/assets/img/logo.png" alt="" width="200"></a>
+                        <a href="#"><img src="/temp/assets/img/logo.png" alt="" width="200"></a>
                     </div>
-                    <p>Khách hàng là trung tâm của mô hình kinh doanh độc đáo của chúng tôi, bao gồm thiết kế.</p>
-                    <a href="#"><img src="/temp/assets/img/payment.png" alt=""></a>
+                    <p>
+                        Chuyên cung cấp Laptop – PC – Màn hình – Linh kiện chính hãng.
+                        Cam kết giá tốt, bảo hành uy tín, hỗ trợ kỹ thuật tận tâm.
+                    </p>
+
                 </div>
             </div>
+
+            <!-- Danh mục sản phẩm -->
             <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
                 <div class="footer__widget">
-                    <h6>Mua sắm</h6>
+                    <h6>Sản phẩm</h6>
                     <ul>
-                        <li><a href="#">Cửa hàng mỹ phẩm</a></li>
-                        <li><a href="#">Kem đang thịnh hành</a></li>
-                        <li><a href="#">Bộ trang điểm</a></li>
-                        <li><a href="#">Giảm giá</a></li>
+                        <li><a href="/shop?type=laptop">Laptop</a></li>
+                        <li><a href="/shop?type=pc">PC – Máy tính để bàn</a></li>
+                        <li><a href="/shop?type=manhinh">Màn hình</a></li>
+                        <li><a href="/shop?type=linhkien">Linh kiện máy tính</a></li>
                     </ul>
                 </div>
             </div>
+
+            <!-- Hỗ trợ -->
             <div class="col-lg-2 col-md-3 col-sm-6">
                 <div class="footer__widget">
-                    <h6>Mua sắm</h6>
+                    <h6>Hỗ trợ</h6>
                     <ul>
-                        <li><a href="#">Liên hệ với chúng tôi</a></li>
-                        <li><a href="#">Phương thức thanh toán</a></li>
-                        <li><a href="#">Vận chuyển</a></li>
-                        <li><a href="#">Đổi trả &amp; Hoàn tiền</a></li>
+                        <li><a href="/contact">Liên hệ</a></li>
+                        <li><a href="/payment">Phương thức thanh toán</a></li>
+                        <li><a href="/shipping">Chính sách vận chuyển</a></li>
+                        <li><a href="/refund">Chính sách đổi trả & hoàn tiền</a></li>
                     </ul>
                 </div>
             </div>
+
+            <!-- Đăng ký nhận tin -->
             <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
                 <div class="footer__widget">
-                    <h6>Bản tin</h6>
+                    <h6>Liên hệ</h6>
                     <div class="footer__newslatter">
-                        <p>Hãy là người đầu tiên biết về các sản phẩm mới, bộ sưu tập, giảm giá &amp; khuyến mãi!</p>
-                        <form action="#">
-                            <input type="text" placeholder="Email của bạn">
-                            <button type="submit"><span class="icon_mail_alt"></span></button>
-                        </form>
+                       
+                    <!-- Contact Info -->
+                    <ul class="mt-3 text-white" style="list-style: none; padding-left: 0;">
+                        <li><strong>📍 Địa chỉ:</strong> 87 Phong Đình Cảng, TP Vinh, Nghệ An</li>
+                        <li><strong>📞 Hotline 1:</strong> <a href="tel:0855840100">0855 840 100</a></li>
+                        <li><strong>📞 Hotline 2:</strong> <a href="tel:0942263111">0942 263 111</a></li>
+                    </ul>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </footer>
+
 <!-- Search Begin -->
 <div class="search-model">
     <div class="h-100 d-flex align-items-center justify-content-center">
         <div class="search-close-switch">+</div>
         <form class="search-model-form">
-            <input type="text" id="search-input" placeholder="Search here.....">
+            <input type="text" id="search-input" placeholder="Tìm kiếm sản phẩm...">
         </form>
     </div>
 </div>

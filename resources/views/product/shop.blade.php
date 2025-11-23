@@ -1,92 +1,139 @@
 @extends('layouts.layout')
 @section('content')
-<style>
-    .pagination nav {
-    margin: 0 auto; }
-.pagination nav div:nth-child(1) {
-    display: none; }
-.pagination nav div:nth-child(2) span {
-    box-shadow: none !important; }
-.pagination nav div:nth-child(2) span span span {
-    padding: 10px 14px !important;
-    border: none !important;
-    margin: 0 5px;
-    background-color: #696cff !important;
-    color: white; }
-.pagination nav div:nth-child(2) span a {
-    padding: 10px 14px !important;
-    border: none !important;
-    margin: 0 5px;
-    transition: all .3s; }
-.pagination nav div:nth-child(2) span a:hover {
-    background-color: #696cff !important;
-    color: white;
-    transition: all .3s; }
-.pagination svg {
-    width: 20px; }
-</style>
-    <!-- Breadcrumb Section Begin -->
+    <style>
+        .product-card img {
+            height: 230px;
+            object-fit: cover;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            transition: 0.3s;
+        }
+
+        .shop__sidebar select,
+        .shop__sidebar input {
+            border-radius: 6px !important;
+        }
+
+        .shop__sidebar h5 {
+            color: #5a5a5a;
+        }
+    </style>
+    <!-- Breadcrumb -->
     <section class="breadcrumb-option">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcrumb__text">
-                        <h4>Shop</h4>
-                        <div class="breadcrumb__links">
-                            <a href="/">Trang chủ</a>
-                            <span>Cửa hàng</span>
-                        </div>
-                    </div>
+            <div class="breadcrumb__text">
+                <h4>Cửa hàng</h4>
+                <div class="breadcrumb__links">
+                    <a href="/">Trang chủ</a>
+                    <span>Cửa hàng</span>
                 </div>
             </div>
         </div>
     </section>
-    <!-- Breadcrumb Section End -->
 
-    <!-- Shop Section Begin -->
+    <!-- Shop Section -->
     <section class="shop spad">
         <div class="container">
             <div class="row">
+
+                <!-- SIDEBAR -->
                 <div class="col-lg-3">
-                    <div class="shop__sidebar">
-                        <div class="shop__sidebar__search">
-                            <form action="{{ route('products.shop') }}">
-                                <input type="text" name="nameProduct" class="text-dark" value="{{$nameProduct}}" placeholder="Search...">
-                                <button type="submit"><span class="icon_search"></span></button>
+                    <div class="shop__sidebar shadow-sm p-3 bg-white rounded">
+
+                        {{-- SEARCH --}}
+                        <div class="mb-4">
+                            <form action="{{ route('products.shop') }}" method="GET">
+                                <div class="input-group">
+                                    <input type="text" name="nameProduct" value="{{ $nameProduct }}"
+                                        class="form-control" placeholder="🔍 Tìm kiếm sản phẩm...">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary">Tìm</button>
+                                    </div>
+                                </div>
                             </form>
                         </div>
-                        <div class="shop__sidebar__accordion">
-                            <div class="accordion" id="accordionExample">
-                                <div class="card">
-                                    <div class="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseOne">Danh mục</a>
-                                    </div>
-                                    <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            <div class="shop__sidebar__categories">
-                                                <ul class="nice-scroll">
-                                                    @foreach($category_all as $item)
-                                                        <li><a class="text-dark" href="{{ route('products.showProduct', ['categorySlug' => $item->slug]) }}">{{$item->title}}</a></li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
+                        {{-- CATEGORY --}}
+                        <div class="mb-4">
+                            <h5 class="font-weight-bold mb-3">📂 Danh mục</h5>
+                            <ul class="list-group">
+                                @foreach ($category_all as $item)
+                                    <a href="{{ route('products.showProduct', ['categorySlug' => $item->slug]) }}"
+                                        class="list-group-item list-group-item-action">
+                                        {{ $item->title }}
+                                    </a>
+                                @endforeach
+                            </ul>
                         </div>
+
                     </div>
                 </div>
+
+                <!-- PRODUCT LIST -->
                 <div class="col-lg-9">
-                    <div class="shop__product__option">
+
+                    {{-- FILTER OPTIONS --}}
+                    <form action="{{ route('products.shop') }}" method="GET">
+                        <input type="hidden" name="nameProduct" value="{{ $nameProduct }}">
                         <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="shop__product__option__left">
-                                    <p>Hiển thị 1–{{$pages}} trên {{ $products->total() }} kết quả:</p>
+                            <div class="col-3">
+                                <h5 class="font-weight-bold mb-0">🔎 Bộ lọc nâng cao</h5>
+
+                            </div>
+
+                            <div class="col-9 d-flex">
+
+                                {{-- FILTER BRAND --}}
+                                <div class="form-group">
+                                    <label class="font-weight-bold">🏷 Hãng</label>
+                                    <select class="form-control" name="brand">
+                                        <option value="">Tất cả</option>
+                                        <option value="dell">Dell</option>
+                                        <option value="hp">HP</option>
+                                        <option value="acer">Acer</option>
+                                        <option value="asus">Asus</option>
+                                        <option value="lenovo">Lenovo</option>
+                                        <option value="macbook">Macbook</option>
+                                        <option value="other">Khác</option>
+                                    </select>
                                 </div>
+
+                                {{-- FILTER STATUS --}}
+                                <div class="form-group">
+                                    <label class="font-weight-bold">📦 Tình trạng</label>
+                                    <select class="form-control" name="condition">
+                                        <option value="">Tất cả</option>
+                                        <option value="new">New</option>
+                                        <option value="likenew">Like New</option>
+                                        <option value="old">Cũ</option>
+                                    </select>
+                                </div>
+
+                                {{-- FILTER PRICE --}}
+                                <div class="form-group">
+                                    <label class="font-weight-bold">💲 Giá</label>
+                                    <select class="form-control" name="price_sort">
+                                        <option value="">Mặc định</option>
+                                        <option value="asc">Giá thấp → cao</option>
+                                        <option value="desc">Giá cao → thấp</option>
+                                    </select>
+                                </div>
+
                             </div>
                         </div>
+                        <button class="btn btn-success btn-block mt-3">
+                            Áp dụng bộ lọc
+                        </button>
+                    </form>
+
+                    <div class="shop__product__option mb-3">
+                        <p class="text-muted">
+                            Hiển thị <b>{{ $pages }}</b> / <b>{{ $products->total() }}</b> sản phẩm
+                        </p>
                     </div>
+
                     <div class="row">
                         @foreach($products as $product)
                             <div id="product-infor-list-{{$product->id}}" class="col-lg-4 col-md-6 col-sm-6 product-infor-main">
@@ -127,15 +174,14 @@
                             </div>
                         @endforeach
                     </div>
-                    <div class="row">
-                        <div class="pagination">
-                            {{ $products->links() }}
-                        </div>
+
+                    <!-- PAGINATION -->
+                    <div class="d-flex justify-content-center mt-4">
+                        {{ $products->links() }}
                     </div>
+
                 </div>
             </div>
         </div>
     </section>
-    <!-- Shop Section End -->
-
 @endsection

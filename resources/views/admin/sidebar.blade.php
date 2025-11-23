@@ -70,32 +70,5 @@
                 <div data-i18n='Layouts'>Quản lý bài viết</div>
             </a>
         </li>
-        <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">Mục Khác</span>
-        </li>
-        <li class='menu-item'>
-            <a href='{{route('addresses.index')}}' class='menu-link'>
-                <i class='menu-icon tf-icons bx bx-street-view'></i>
-                <div data-i18n='Layouts'>Địa chỉ</div>
-            </a>
-        </li>
-        <li class='menu-item'>
-            <a href='{{route('orders.index')}}' class='menu-link'>
-                <i class='menu-icon tf-icons bx bx-food-menu'></i>
-                <div data-i18n='Layouts'>Quản lý đơn hàng</div>
-            </a>
-        </li>
-        <li class='menu-item'>
-            <a href='{{route('feedback.index')}}' class='menu-link'>
-                <i class='menu-icon tf-icons bx bx-food-menu'></i>
-                <div data-i18n='Layouts'>Danh sách phản hồi</div>
-            </a>
-        </li>
-        <li class='menu-item'>
-            <a href='{{route("settings.index")}}' class='menu-link'>
-                <i class='menu-icon tf-icons bx bx-street-view'></i>
-                <div data-i18n='Layouts'>Cấu hình</div>
-            </a>
-        </li>
     </ul>
 </aside>
