@@ -122,6 +122,8 @@ Route::post('/cart/check-stock', [MainCartController::class, 'checkStock'])->nam
             Route::resource('products', ProductController::class);
             Route::delete('/products/{id}', [ProductController::class,'destroy'])->name('products.destroy');
             Route::post('products/delete-all', [ProductController::class,'deleteAllProducts'])->name('deleteAllProduct');
+            Route::post('/products/toggle-hot', [ProductController::class, 'toggleHot']);
+            Route::post('/products/toggle-stock', [ProductController::class, 'toggleStock']);
 
             //            Posts
             Route::resource('posts', PostController::class);

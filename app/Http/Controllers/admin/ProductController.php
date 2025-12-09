@@ -58,7 +58,7 @@ class ProductController extends Controller
         $product->discount = $request->discount;
         $product->active = 1;
         $product->ishot = $request->ishot ? 1 : 0;
-        $product->isnewfeed = 1;
+        $product->isOutOfStock = 1;
         $product->thongsokythuat = $request->thongsokythuat;
         $product->Amounts = $request->amount;
         $product->content = $request->content;
@@ -107,6 +107,8 @@ class ProductController extends Controller
         $product->active = $request->active ? 1 : 0;
         $product->ishot = $request->ishot ? 1 : 0;
         $product->isnewfeed = $request->isnewfeed ? 1 : 0;
+        $product->isOutOfStock = $request->isOutOfStock ? 1 : 0;
+
         $product->thongsokythuat = $request->thongsokythuat;
         $product->Amounts = $request->amount;
         $product->content = $request->content;
@@ -132,4 +134,38 @@ class ProductController extends Controller
         Product::truncate(); // Xóa tất cả bản ghi
         return redirect()->back();
     }
+
+    public function toggleHot(Request $request)
+    {
+        $product = Product::find($request->id);
+        if (!$product) {
+            return response()->json(['status' => 'error'], 404);
+        }
+
+        $product->ishot = !$product->ishot;
+        $product->save();
+
+        return response()->json([
+            'status' => 'success',
+            'ishot' => $product->ishot
+        ]);
+    }
+
+    public function toggleStock(Request $request)
+    {
+        $product = Product::find($request->id);
+        if (!$product) {
+            return response()->json(['status' => 'error'], 404);
+        }
+
+        // Nếu bạn muốn "1 = còn hàng", "0 = hết hàng"
+        $product->isOutOfStock = !$product->isOutOfStock;
+        $product->save();
+
+        return response()->json([
+            'status' => 'success',
+            'isOutOfStock' => $product->isOutOfStock
+        ]);
+    }
+
 }

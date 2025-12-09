@@ -1,23 +1,68 @@
 @extends('admin.main')
+<style>
+/* Kích thước switch */
+.body-table .form-check-input {
+    width: 50px !important;
+    height: 24px !important;
+    cursor: pointer;
+    appearance: none;
+    position: relative;
+    background-color: #8a8a8a !important; /* MÀU XÁM ĐẬM LÚC OFF */
+    border: 2px solid #6e6e6e !important; /* VIỀN ĐẬM */
+    border-radius: 30px;
+    transition: all 0.25s ease;
+}
+
+/* Nút tròn bên trong */
+.body-table .form-check-input::before {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 1px;
+    left: 1px;
+    background: white;
+    border-radius: 50%;
+    transition: all 0.25s ease;
+    box-shadow: 0px 1px 4px rgba(0,0,0,0.3);
+}
+
+/* Trạng thái BẬT */
+.body-table .form-check-input:checked {
+    background-color: #28a745 !important; /* MÀU XANH ĐẬM */
+    border-color: #28a745 !important;
+}
+
+/* Nút tròn khi BẬT */
+.body-table .form-check-input:checked::before {
+    transform: translateX(26px);
+}
+
+
+</style>
 @section('contents')
     <div class="container-fluid flex-grow-1 container-p-y">
-        <h3 class="fw-bold text-primary py-3 mb-4">{{$title}}</h3>
+        <h3 class="fw-bold text-primary py-3 mb-4">{{ $title }}</h3>
         <div class="card">
             <div class="d-flex p-4 justify-content-between">
                 <h5 class=" fw-bold">Danh sách sản phẩm</h5>
                 <div>
-                    <button type="button" data-id="" class="btn btn-success text-dark px-2 py-1 fw-bolder" data-bs-toggle="modal" data-bs-target="#createProduct" >Thêm mới</button>
+                    <button type="button" data-id="" class="btn btn-success text-dark px-2 py-1 fw-bolder"
+                        data-bs-toggle="modal" data-bs-target="#createProduct">Thêm mới</button>
                     {{-- <button type="button"class="btn btn-danger me-2 px-2 py-1 fw-bolder" data-bs-toggle="modal" data-bs-target="#deleteModalAll">Xóa tất cả</button> --}}
-                    <div class="modal fade" id="deleteModalAll" tabindex="-1" aria-labelledby="deleteModalAllLabel" aria-hidden="true">
+                    <div class="modal fade" id="deleteModalAll" tabindex="-1" aria-labelledby="deleteModalAllLabel"
+                        aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="deleteModalLabel">Bạn có chắc chắn xóa tất cả sản phẩm không ?</h1>
+                                    <h1 class="modal-title fs-5" id="deleteModalLabel">Bạn có chắc chắn xóa tất cả sản phẩm
+                                        không ?</h1>
                                 </div>
-                                <form action="{{route('deleteAllProduct')}}" method="post" class="modal-footer">
+                                <form action="{{ route('deleteAllProduct') }}" method="post" class="modal-footer">
                                     @csrf
                                     <button class="delete-forever btn btn-danger fw-bolder">Xóa</button>
-                                    <button type="button" class="btn btn-secondary fw-bolder" data-bs-dismiss="modal">Đóng</button>
+                                    <button type="button" class="btn btn-secondary fw-bolder"
+                                        data-bs-dismiss="modal">Đóng</button>
                                 </form>
                             </div>
                         </div>
@@ -25,69 +70,53 @@
                 </div>
             </div>
 
-{{--            Thêm mới --}}
-            <div class="modal fade" id="createProduct" tabindex="-1" aria-labelledby="createProductLabel" aria-hidden="true" style="overflow-x:hidden !important">
+            {{--            Thêm mới --}}
+            <div class="modal fade" id="createProduct" tabindex="-1" aria-labelledby="createProductLabel"
+                aria-hidden="true" style="overflow-x:hidden !important">
                 <div class="modal-dialog" style="max-width: 1440px">
                     <div class="modal-content">
                         <div class="modal-header border-bottom">
                             <h1 class="modal-title fs-5" id="createProductLabel">Thêm mới sản phẩm.</h1>
                         </div>
-                            <div class="nav mt-3 d-flex justify-content-center" id="nav-tab" role="tablist">
-                                <button class="nav-link text-uppercase border-0 bg-white fw-bold active me-3" id="basic-info-tab" data-bs-toggle="tab" data-bs-target="#basic-info" type="button" role="tab" aria-controls="basic-info" aria-selected="true">Thông tin cơ bản</button>
-                                <button class="nav-link me-3 text-uppercase border-0 bg-white fw-bold" id="content-details-tab" data-bs-toggle="tab" data-bs-target="#content-details" type="button" role="tab" aria-controls="content-details" aria-selected="false">Nội dung chi tiết</button>
-                                {{-- <button class="nav-link text-uppercase border-0 bg-white fw-bold" id="thongsokythuat-tab" data-bs-toggle="tab" data-bs-target="#thongsokythuat" type="button" role="tab" aria-controls="thongsokythuat" aria-selected="false">Thông số kỹ thuật</button> --}}
-                            </div>
+                        <div class="nav mt-3 d-flex justify-content-center" id="nav-tab" role="tablist">
+                            <button class="nav-link text-uppercase border-0 bg-white fw-bold active me-3"
+                                id="basic-info-tab" data-bs-toggle="tab" data-bs-target="#basic-info" type="button"
+                                role="tab" aria-controls="basic-info" aria-selected="true">Thông tin cơ bản</button>
+                            <button class="nav-link me-3 text-uppercase border-0 bg-white fw-bold" id="content-details-tab"
+                                data-bs-toggle="tab" data-bs-target="#content-details" type="button" role="tab"
+                                aria-controls="content-details" aria-selected="false">Nội dung chi tiết</button>
+                            {{-- <button class="nav-link text-uppercase border-0 bg-white fw-bold" id="thongsokythuat-tab" data-bs-toggle="tab" data-bs-target="#thongsokythuat" type="button" role="tab" aria-controls="thongsokythuat" aria-selected="false">Thông số kỹ thuật</button> --}}
+                        </div>
                         <div class="card-body">
                             <div class="error">
                                 @include('admin.error')
                             </div>
-                            <form id="form_product_store" class="form-create" method='POST' enctype="multipart/form-data" action='{{route('products.store')}}'>
+                            <form id="form_product_store" class="form-create" method='POST' enctype="multipart/form-data"
+                                action='{{ route('products.store') }}'>
                                 @csrf
                                 <div class="tab-content" id="nav-tabContent">
-                                    <div class="tab-pane fade show active" id="basic-info" role="tabpanel" aria-labelledby="basic-info-tab" tabindex="0">
-                                        <div class="mb-3 d-flex flex-column image-gallery" id="image-gallery-form_product_store">
-                                            <label
-                                                class='form-label'
-                                                for='basic-default-fullname'
-                                            >Ảnh</label>
-                                            <input 
-                                                        type="file" 
-                                                        name="images[]" 
-                                                        class="file-input" 
-                                                        id="file-input-store" 
-                                                        multiple 
-                                                        accept=".jpg,.jpeg,.png,.webp"
-                                                        onchange="previewImages(event, 'store')"
-                                                    >                                                    
-                                                    <div class="image-preview" id="image-preview-store"></div>
+                                    <div class="tab-pane fade show active" id="basic-info" role="tabpanel"
+                                        aria-labelledby="basic-info-tab" tabindex="0">
+                                        <div class="mb-3 d-flex flex-column image-gallery"
+                                            id="image-gallery-form_product_store">
+                                            <label class='form-label' for='basic-default-fullname'>Ảnh</label>
+                                            <input type="file" name="images[]" class="file-input" id="file-input-store"
+                                                multiple accept=".jpg,.jpeg,.png,.webp"
+                                                onchange="previewImages(event, 'store')">
+                                            <div class="image-preview" id="image-preview-store"></div>
                                         </div>
                                         <div class='mb-3 w-100 me-3'>
-                                            <label
-                                                class='form-label'
-                                                for='basic-default-fullname'
-                                            >Tên sản phẩm</label>
-                                            <input
-                                                type='text'
-                                                class='form-control title input-field '
-                                                id='title-store'
-                                                placeholder='Nhập Tên sản phẩm'
-                                                name='title' data-require='Mời nhập Tên sản phẩm'
-                                            />
+                                            <label class='form-label' for='basic-default-fullname'>Tên sản phẩm</label>
+                                            <input type='text' class='form-control title input-field ' id='title-store'
+                                                placeholder='Nhập Tên sản phẩm' name='title'
+                                                data-require='Mời nhập Tên sản phẩm' />
                                         </div>
                                         <div class='mb-3 w-100'>
-                                                <label
-                                                    class='form-label'
-                                                    for='basic-default-company'
-                                                >Slug</label>
-                                                <input
-                                                    type='text'
-                                                    class='form-control slug input-field'
-                                                    id='slug-store'
-                                                    placeholder='Nhập Slug'
-                                                    readonly
-                                                    name='slug' data-require='Mời nhập Slug'
-                                                />
-                                            </div>
+                                            <label class='form-label' for='basic-default-company'>Slug</label>
+                                            <input type='text' class='form-control slug input-field' id='slug-store'
+                                                placeholder='Nhập Slug' readonly name='slug'
+                                                data-require='Mời nhập Slug' />
+                                        </div>
                                         {{-- <div class='mb-3'>
                                             <div class="form-group">
                                                 <label class="mb-3" for="">Mô tả</label>
@@ -95,56 +124,38 @@
                                             </div>
                                         </div> --}}
                                         <div class="form-group mb-3">
-                                            <label class='form-label'
-                                                   for='basic-default-email'>Danh mục</label>
+                                            <label class='form-label' for='basic-default-email'>Danh mục</label>
                                             <select name="cate_id" class="form-control" id="cate_id">
                                                 <option value="">Chọn danh mục</option>
-                                                @foreach($cates as $cate)
-                                                    <option value="{{ $cate->id }}">{{ $cate->id }} - {{ $cate->parent?->title }} - {{ $cate->title }}</option>
+                                                @foreach ($cates as $cate)
+                                                    <option value="{{ $cate->id }}">{{ $cate->id }} -
+                                                        {{ $cate->parent?->title }} - {{ $cate->title }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="d-flex mb-3 ">
                                             <div class='me-3'>
-                                                <label
-                                                    class='form-label'
-                                                    for='basic-default-email'
-                                                >Giá gốc ( VND )</label>
+                                                <label class='form-label' for='basic-default-email'>Giá gốc ( VND
+                                                    )</label>
                                                 <div class='input-group input-group-merge'>
-                                                    <input
-                                                        type='text'
-                                                        id='price'
-                                                        class='form-control'
-                                                        name='price'
-                                                    />
+                                                    <input type='text' id='price' class='form-control'
+                                                        name='price' />
                                                 </div>
                                             </div>
                                             <div class='me-3'>
-                                                <label
-                                                    class='form-label'
-                                                    for='basic-default-email'
-                                                >Giá bán ra ( VND )</label>
+                                                <label class='form-label' for='basic-default-email'>Giá bán ra ( VND
+                                                    )</label>
                                                 <div class='input-group input-group-merge'>
-                                                    <input
-                                                        type='text'
-                                                        id='discount'
-                                                        class='form-control'
-                                                        name='discount'
-                                                    />
+                                                    <input type='text' id='discount' class='form-control'
+                                                        name='discount' />
                                                 </div>
                                             </div>
                                             <div class='me-3'>
-                                                <label
-                                                    class='form-label'
-                                                    for='basic-default-email'
-                                                >Giá thợ ( VND )</label>
+                                                <label class='form-label' for='basic-default-email'>Giá thợ ( VND
+                                                    )</label>
                                                 <div class='input-group input-group-merge'>
-                                                    <input
-                                                        type='text'
-                                                        id='workerPrice'
-                                                        class='form-control'
-                                                        name='workerPrice'
-                                                    />
+                                                    <input type='text' id='workerPrice' class='form-control'
+                                                        name='workerPrice' />
                                                 </div>
                                             </div>
                                             {{-- <div class=''>
@@ -164,13 +175,14 @@
                                         </div>
                                         <div class="d-flex mb-3 ">
                                             <div class="form-check me-3">
-                                                <input class="form-check-input" type="checkbox" id="ishot" name="ishot">
+                                                <input class="form-check-input" type="checkbox" id="ishot"
+                                                    name="ishot">
                                                 <label class="form-check-label" for="ishot"> Đang Hot </label>
                                             </div>
                                         </div>
                                         <div id="newType" class="mb-3">
                                             <label class='form-label'>Hãng ( Hp/ Dell / Asus/ Acer )</label>
-                                             <select name="types" class="form-control" id="types">
+                                            <select name="types" class="form-control" id="types">
                                                 <option value="">Chọn Hãng</option>
                                                 <option value="hp">Hp</option>
                                                 <option value="dell">Dell</option>
@@ -182,7 +194,8 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade" id="content-details" role="tabpanel" aria-labelledby="content-details-tab" tabindex="0">
+                                    <div class="tab-pane fade" id="content-details" role="tabpanel"
+                                        aria-labelledby="content-details-tab" tabindex="0">
                                         <div class="form-group">
                                             <label class="mb-3" for="">Nội dung</label>
                                             <textarea name="content" class="form-control ckeditor-content ckeditor"></textarea>
@@ -198,7 +211,8 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type='submit' class='btn btn-success fw-semibold text-dark'>Thêm mới</button>
-                                    <button type="button" class="btn btn-secondary fw-semibold" data-bs-dismiss="modal">Đóng</button>
+                                    <button type="button" class="btn btn-secondary fw-semibold"
+                                        data-bs-dismiss="modal">Đóng</button>
                                 </div>
 
                             </form>
@@ -207,165 +221,181 @@
                 </div>
             </div>
             <div class="table-responsive t table-bordered">
-                <table class="table">
+                <table class="table table-bordered">
                     <thead>
-                    <tr>
-                        <th>STT</th>
-                        <th>Ảnh</th>
-                        <th>Tên sản phẩm</th>
-                        <th>Danh mục</th>
-                        <th>Giá gốc</th>
-                        <th>Giá giảm</th>
-                        <th>Giá Thợ</th>
-                        {{-- <th>Hoạt động</th> --}}
-                        <th>Đang Hot</th>
-                        <th>Còn hàng ?</th>
-                        <th>Lượt xem</th>
-                        {{-- <th>Mới nhất</th> --}}
-                        {{-- <th>Số lượng</th> --}}
-                        <th>Thao tác</th>
+                        <tr>
+                            <th>STT</th>
+                            <th>Ảnh</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Danh mục</th>
+                            <th>Giá gốc</th>
+                            <th>Giá giảm</th>
+                            <th>Giá Thợ</th>
+                            {{-- <th>Hoạt động</th> --}}
+                            <th>Đang Hot</th>
+                            <th>Còn hàng ?</th>
+                            <th>Lượt xem</th>
+                            {{-- <th>Mới nhất</th> --}}
+                            {{-- <th>Số lượng</th> --}}
+                            <th>Thao tác</th>
 
-                    </tr>
+                        </tr>
                     </thead>
-                    <tbody class="table-border-bottom-0">
-                    @foreach($products as $product)
-                        <tr data-id="{{$product->id}}">
-                            <td> {{ $loop->iteration }}</td>
-                            <td>
-                                <img width="100" src="/temp/images/product/{{$product->thumb}}" alt="{{ $product->title }}'s Thumb">
-                            </td>
-                            <td width="250px">{{$product->Title}}</td>
-                            <td>
-                                @if($product->cate_id != null)
-                                    {{$product->Category->title ?? ''}} - {{ $product->company }}
-                                @else
-                                    Chưa chọn danh mục
-                                @endif
-                            </td>
-                            <td>{{ number_format($product->price) }} VNĐ</td>
-                            <td>{{ number_format($product->discount) }} VNĐ</td>
-                            <td>{{ number_format($product->workerPrice) }} VNĐ</td>
+                    <tbody class="table-border-bottom-0 body-table">
+                        @foreach ($products as $product)
+                            <tr data-id="{{ $product->id }}">
+                                <td> {{ $loop->iteration }}</td>
+                                <td>
+                                    <img width="100" src="/temp/images/product/{{ $product->thumb }}"
+                                        alt="{{ $product->title }}'s Thumb">
+                                </td>
+                                <td width="250px">{{ $product->Title }}</td>
+                                <td>
+                                    @if ($product->cate_id != null)
+                                        {{ $product->Category->title ?? '' }} - {{ $product->company }}
+                                    @else
+                                        Chưa chọn danh mục
+                                    @endif
+                                </td>
+                                <td>{{ number_format($product->price) }} VNĐ</td>
+                                <td>{{ number_format($product->discount) }} VNĐ</td>
+                                <td>{{ number_format($product->workerPrice) }} VNĐ</td>
 
-                            {{-- <td>
-                                @if($product->active == 1)
+                                {{-- <td>
+                                @if ($product->active == 1)
                                     <i class='bx bxs-circle text-success'></i>
                                 @else
                                     <i class='bx bxs-circle text-danger'></i>
                                 @endif
                             </td> --}}
-                            <td>
-                                @if($product->ishot == 1)
-                                    <i class='bx bxs-circle text-success'></i>
-                                @else
-                                    <i class='bx bxs-circle text-danger'></i>
-                                @endif
-                            </td>
-                             <td>
-                                @if($product->isOutOfStock == 1)
-                                    <i class='bx bxs-circle text-success'></i>
-                                @else
-                                    <i class='bx bxs-circle text-danger'></i>
-                                @endif
-                            </td>
-                            <td>
-                                {{$product->view}}
-                            </td>
-                            {{-- <td>
-                                @if($product->isnewfeed == 1)
+                                <td>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input toggle-hot" type="checkbox"
+                                            data-id="{{ $product->id }}" {{ $product->ishot ? 'checked' : '' }}>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input toggle-stock" type="checkbox"
+                                            data-id="{{ $product->id }}" {{ $product->isOutOfStock ? 'checked' : '' }}>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    {{ $product->view }}
+                                </td>
+                                {{-- <td>
+                                @if ($product->isnewfeed == 1)
                                     <i class='bx bxs-circle text-success'></i>
                                 @else
                                     <i class='bx bxs-circle text-danger'></i>
                                 @endif
                             </td> --}}
-                            {{-- <td>
+                                {{-- <td>
                                 {{ $product->Amounts }}
                             </td> --}}
-                            <td class="">
-                                <button type="button" data-url="/admin/products/{{$product->id}}" data-id="{{$product->id}}" class="btn btn-danger btnDeleteAsk me-2 px-2 py-1 fw-bolder" data-bs-toggle="modal" data-bs-target="#deleteModal">Xóa</button>
-                                <button type="button" data-id="{{$product->id}}" class="btn btn-edit btn-info btnEditProduct text-dark px-2 py-1 fw-bolder" data-bs-toggle="modal" data-bs-target="#editProduct{{$product->id}}">Sửa</button>
-                            </td>
-                            <!-- Modal Delete -->
-                            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" style="overflow-x:hidden !important">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="deleteModalLabel">Bạn có chắc chắn xóa bản ghi này vĩnh viễn không ?</h1>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button class="delete-forever btn btn-danger" data-id="{{ $product->id }}">Xóa</button>
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                <td class="">
+                                    <button type="button" data-url="/admin/products/{{ $product->id }}"
+                                        data-id="{{ $product->id }}"
+                                        class="btn btn-danger btnDeleteAsk me-2 px-2 py-1 fw-bolder"
+                                        data-bs-toggle="modal" data-bs-target="#deleteModal">Xóa</button>
+                                    <button type="button" data-id="{{ $product->id }}"
+                                        class="btn btn-edit btn-info btnEditProduct text-dark px-2 py-1 fw-bolder"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#editProduct{{ $product->id }}">Sửa</button>
+                                </td>
+                                <!-- Modal Delete -->
+                                <div class="modal fade" id="deleteModal" tabindex="-1"
+                                    aria-labelledby="deleteModalLabel" aria-hidden="true"
+                                    style="overflow-x:hidden !important">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="deleteModalLabel">Bạn có chắc chắn xóa
+                                                    bản ghi này vĩnh viễn không ?</h1>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="delete-forever btn btn-danger"
+                                                    data-id="{{ $product->id }}">Xóa</button>
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Đóng</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </tr>
+                            </tr>
 
-                        <!-- Modal Edit -->
-                    @endforeach
+                            <!-- Modal Edit -->
+                        @endforeach
                     </tbody>
                 </table>
 
                 {{--                Sửa --}}
-                @foreach($products as $product)
-                    <div class="modal fade" id="editProduct{{$product->id}}" aria-labelledby="editProduct{{$product->id}}Label" style="overflow-x:hidden !important">
+                @foreach ($products as $product)
+                    <div class="modal fade" id="editProduct{{ $product->id }}"
+                        aria-labelledby="editProduct{{ $product->id }}Label" style="overflow-x:hidden !important">
                         <div class="modal-dialog" style="max-width: 1440px">
                             <div class="modal-content">
                                 <div class="modal-header border-bottom">
                                     <h1 class="modal-title fs-5" id="createProductLabel">Chỉnh sửa sản phẩm.</h1>
                                 </div>
-                                <div class="nav mt-3 d-flex justify-content-center" id="{{$product->id}}-nav-tab" role="tablist">
-                                    <button class="nav-link text-uppercase border-0 bg-white fw-bold active me-3" id="basic-info-{{$product->id}}-tab" data-bs-toggle="tab" data-bs-target="#basic-info-{{$product->id}}" type="button" role="tab" aria-controls="basic-info-{{$product->id}}" aria-selected="true">Thông tin cơ bản</button>
-                                    <button class="nav-link me-3 text-uppercase border-0 bg-white fw-bold" id="content-details-{{$product->id}}-tab" data-bs-toggle="tab" data-bs-target="#content-details-{{$product->id}}" type="button" role="tab" aria-controls="content-details-{{$product->id}}" aria-selected="false">Nội dung chi tiết</button>
+                                <div class="nav mt-3 d-flex justify-content-center" id="{{ $product->id }}-nav-tab"
+                                    role="tablist">
+                                    <button class="nav-link text-uppercase border-0 bg-white fw-bold active me-3"
+                                        id="basic-info-{{ $product->id }}-tab" data-bs-toggle="tab"
+                                        data-bs-target="#basic-info-{{ $product->id }}" type="button" role="tab"
+                                        aria-controls="basic-info-{{ $product->id }}" aria-selected="true">Thông tin cơ
+                                        bản</button>
+                                    <button class="nav-link me-3 text-uppercase border-0 bg-white fw-bold"
+                                        id="content-details-{{ $product->id }}-tab" data-bs-toggle="tab"
+                                        data-bs-target="#content-details-{{ $product->id }}" type="button"
+                                        role="tab" aria-controls="content-details-{{ $product->id }}"
+                                        aria-selected="false">Nội dung chi tiết</button>
                                     {{-- <button class="nav-link text-uppercase border-0 bg-white fw-bold" id="thongsokythuat-{{$product->id}}-tab" data-bs-toggle="tab" data-bs-target="#thongsokythuat-{{$product->id}}" type="button" role="tab" aria-controls="thongsokythuat-{{$product->id}}" aria-selected="false">Thông số kỹ thuật</button> --}}
                                 </div>
                                 <div class="card-body">
                                     <div class="error">
                                         @include('admin.error')
                                     </div>
-                                    <form class="form_product_update form-edit" id="form_product_update-{{$product->id}}" class="form-create" method='POST' enctype="multipart/form-data" action='{{route('products.update',['product' => $product])}}'>
+                                    <form class="form_product_update form-edit"
+                                        id="form_product_update-{{ $product->id }}" class="form-create" method='POST'
+                                        enctype="multipart/form-data"
+                                        action='{{ route('products.update', ['product' => $product]) }}'>
                                         @method('Patch')
                                         @csrf
-                                        <div class="tab-content" id="{{$product->id}}-nav-tabContent">
-                                            <div class="tab-pane fade show active" id="basic-info-{{$product->id}}" role="tabpanel" aria-labelledby="basic-info-{{$product->id}}-tab" tabindex="0">
-                                                <div class="mb-3 d-flex flex-column image-gallery" id="image-gallery-{{$product->id}}">
-                                                    <label
-                                                        class='form-label'
-                                                        for='basic-default-fullname'
-                                                    >Ảnh</label>
-                                                    <input accept=".jpg,.jpeg,.png,.webp" type="file" name="images[]" class="file-input" id="file-input-{{$product->id}}" multiple onchange="previewImages(event, {{$product->id}})">
-                                                    <div class="image-preview" id="image-preview-{{$product->id}}">
-                                                        @foreach(json_decode($product->images, true) ?? [] as $image)
-                                                            <img src="/temp/images/product/{{ $image }}" class="img-detail mx-auto mb-2" style="max-height: 100px;" />
+                                        <div class="tab-content" id="{{ $product->id }}-nav-tabContent">
+                                            <div class="tab-pane fade show active" id="basic-info-{{ $product->id }}"
+                                                role="tabpanel" aria-labelledby="basic-info-{{ $product->id }}-tab"
+                                                tabindex="0">
+                                                <div class="mb-3 d-flex flex-column image-gallery"
+                                                    id="image-gallery-{{ $product->id }}">
+                                                    <label class='form-label' for='basic-default-fullname'>Ảnh</label>
+                                                    <input accept=".jpg,.jpeg,.png,.webp" type="file" name="images[]"
+                                                        class="file-input" id="file-input-{{ $product->id }}" multiple
+                                                        onchange="previewImages(event, {{ $product->id }})">
+                                                    <div class="image-preview" id="image-preview-{{ $product->id }}">
+                                                        @foreach (json_decode($product->images, true) ?? [] as $image)
+                                                            <img src="/temp/images/product/{{ $image }}"
+                                                                class="img-detail mx-auto mb-2"
+                                                                style="max-height: 100px;" />
                                                         @endforeach
                                                     </div>
                                                 </div>
                                                 <div class='mb-3 w-100 me-3'>
-                                                    <label
-                                                        class='form-label'
-                                                        for='basic-default-fullname'
-                                                    >Tên sản phẩm</label>
-                                                    <input
-                                                        type='text'
-                                                        class='form-control title input-field '
-                                                        id='title-edit-{{$product->id}}'
-                                                        placeholder='Nhập Tên sản phẩm'
-                                                        value="{{$product->Title}}"
-                                                        name='title' data-require='Mời nhập Tên sản phẩm'
-                                                    />
+                                                    <label class='form-label' for='basic-default-fullname'>Tên sản
+                                                        phẩm</label>
+                                                    <input type='text' class='form-control title input-field '
+                                                        id='title-edit-{{ $product->id }}'
+                                                        placeholder='Nhập Tên sản phẩm' value="{{ $product->Title }}"
+                                                        name='title' data-require='Mời nhập Tên sản phẩm' />
                                                 </div>
                                                 <div class='mb-3 w-100'>
-                                                    <label
-                                                        class='form-label'
-                                                        for='basic-default-company'
-                                                    >Slug</label>
-                                                    <input
-                                                        type='text'
-                                                        class='form-control slug input-field'
-                                                        id='slug-edit-{{$product->id}}'
-                                                        value="{{$product->slug}}"
-                                                        placeholder='Nhập Slug'
-                                                        name='slug' data-require='Mời nhập Slug'
-                                                    />
+                                                    <label class='form-label' for='basic-default-company'>Slug</label>
+                                                    <input type='text' class='form-control slug input-field'
+                                                        id='slug-edit-{{ $product->id }}' value="{{ $product->slug }}"
+                                                        placeholder='Nhập Slug' name='slug'
+                                                        data-require='Mời nhập Slug' />
                                                 </div>
                                                 {{-- <div class='mb-3'>
                                                     <div class="form-group">
@@ -374,63 +404,49 @@
                                                     </div>
                                                 </div> --}}
                                                 <div class="form-group mb-3">
-                                                    <label class='form-label'
-                                                           for='basic-default-email'>Danh mục</label>
-                                                    <select name="cate_id" class="form-control" id="cate_id-{{$product->id}}">
-                                                        @if($product->cate_id != null)
-                                                            <option value="{{ $product->Category->id ?? '' }}">{{ $product->Category->id ?? '' }}-{{ $product->Category->title ?? '' }}</option>
+                                                    <label class='form-label' for='basic-default-email'>Danh mục</label>
+                                                    <select name="cate_id" class="form-control"
+                                                        id="cate_id-{{ $product->id }}">
+                                                        @if ($product->cate_id != null)
+                                                            <option value="{{ $product->Category->id ?? '' }}">
+                                                                {{ $product->Category->id ?? '' }}-{{ $product->Category->title ?? '' }}
+                                                            </option>
                                                         @else
                                                             <option value="">Chọn danh mục </option>
                                                         @endif
-                                                        @foreach($cates as $cate)
-                                                            <option value="{{ $cate->id }}">{{ $cate->id }}-{{ $cate->title }}</option>
+                                                        @foreach ($cates as $cate)
+                                                            <option value="{{ $cate->id }}">
+                                                                {{ $cate->id }} - {{ $cate->parent?->title }} -
+                                                                {{ $cate->title }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="d-flex mb-3 ">
                                                     <div class='me-3'>
-                                                        <label
-                                                            class='form-label'
-                                                            for='basic-default-email'
-                                                        >Giá gốc ( VND )</label>
+                                                        <label class='form-label' for='basic-default-email'>Giá gốc ( VND
+                                                            )</label>
                                                         <div class='input-group input-group-merge'>
-                                                            <input
-                                                                type='text'
-                                                                id='price-{{$product->id}}'
-                                                                value="{{$product->price}}"
-                                                                class='form-control'
-                                                                name='price'
-                                                            />
+                                                            <input type='text' id='price-{{ $product->id }}'
+                                                                value="{{ $product->price }}" class='form-control'
+                                                                name='price' />
                                                         </div>
                                                     </div>
                                                     <div class='me-3'>
-                                                        <label
-                                                            class='form-label'
-                                                            for='basic-default-email'
-                                                        >Giá bán ra ( VND )</label>
+                                                        <label class='form-label' for='basic-default-email'>Giá bán ra (
+                                                            VND )</label>
                                                         <div class='input-group input-group-merge'>
-                                                            <input
-                                                                type='text'
-                                                                id='discount-{{$product->id}}'
-                                                                value="{{$product->discount}}"
-                                                                class='form-control'
-                                                                name='discount'
-                                                            />
+                                                            <input type='text' id='discount-{{ $product->id }}'
+                                                                value="{{ $product->discount }}" class='form-control'
+                                                                name='discount' />
                                                         </div>
                                                     </div>
                                                     <div class='me-3'>
-                                                        <label
-                                                            class='form-label'
-                                                            for='basic-default-email'
-                                                        >Giá thợ( VND )</label>
+                                                        <label class='form-label' for='basic-default-email'>Giá thợ( VND
+                                                            )</label>
                                                         <div class='input-group input-group-merge'>
-                                                            <input
-                                                                type='text'
-                                                                id='workerPrice-{{$product->id}}'
-                                                                value="{{$product->workerPrice}}"
-                                                                class='form-control'
-                                                                name='workerPrice'
-                                                            />
+                                                            <input type='text' id='workerPrice-{{ $product->id }}'
+                                                                value="{{ $product->workerPrice }}" class='form-control'
+                                                                name='workerPrice' />
                                                         </div>
                                                     </div>
                                                     {{-- <div class=''>
@@ -451,7 +467,7 @@
                                                 </div>
                                                 <div class="d-flex mb-3 ">
                                                     {{-- <div class="form-check me-3">
-                                                        @if($product->active == 1)
+                                                        @if ($product->active == 1)
                                                             <input class="form-check-input" type="checkbox" checked name="active">
                                                         @else
                                                             <input class="form-check-input" type="checkbox" name="active">
@@ -459,16 +475,30 @@
                                                             <label class="form-check-label" for="defaultCheck3"> Hoạt động </label>
                                                     </div> --}}
                                                     <div class="form-check me-3">
-                                                        @if($product->ishot == 1)
-                                                            <input class="form-check-input" type="checkbox" checked name="ishot">
+                                                        @if ($product->ishot == 1)
+                                                            <input class="form-check-input" id="isHot"
+                                                                type="checkbox" checked name="ishot">
                                                         @else
-                                                            <input class="form-check-input" type="checkbox" name="ishot">
+                                                            <input class="form-check-input" id="isHot"
+                                                                type="checkbox" name="ishot">
                                                         @endif
-                                                        <label class="form-check-label" for="defaultCheck3"> Đang Hot </label>
+                                                        <label class="form-check-label" for="isHot"> Đang Hot
+                                                        </label>
                                                     </div>
-                                                  
+                                                    <div class="form-check me-3">
+                                                        @if ($product->isOutOfStock == 1)
+                                                            <input class="form-check-input" id="isOutOfStock"
+                                                                type="checkbox" checked name="isOutOfStock">
+                                                        @else
+                                                            <input class="form-check-input" id="isOutOfStock"
+                                                                type="checkbox" name="isOutOfStock">
+                                                        @endif
+                                                        <label class="form-check-label" for="isOutOfStock"> Còn hàng ?
+                                                        </label>
+                                                    </div>
+
                                                     {{-- <div class="form-check">
-                                                        @if($product->isnewfeed == 1)
+                                                        @if ($product->isnewfeed == 1)
                                                             <input class="form-check-input" type="checkbox" checked name="isnewfeed">
                                                         @else
                                                             <input class="form-check-input" type="checkbox" name="isnewfeed">
@@ -477,11 +507,31 @@
                                                     </div> --}}
                                                 </div>
                                             </div>
-                                            <div  class="mb-3">
-                                                        <label class='form-label'>Phân loại ( ngăn cách bởi dấu phẩy )</label>
-                                                        <input type='text' class='form-control ' value="{{$product->types}}" placeholder='Nhập giá trị (vd: Loại A, Loại B, Loại C)' name='types' />
-                                                    </div>
-                                            <div class="tab-pane fade" id="content-details-{{$product->id}}" role="tabpanel" aria-labelledby="content-details-{{$product->id}}-tab" tabindex="0">
+                                            <div id="newType" class="mb-3">
+                                                <label class='form-label'>Hãng ( Hp/ Dell / Asus/ Acer )</label>
+                                                <select name="types" class="form-control" id="types">
+                                                    <option value="">Chọn Hãng</option>
+                                                    <option value="hp"
+                                                        {{ $product->types == 'hp' ? 'selected' : '' }}>Hp</option>
+                                                    <option value="dell"
+                                                        {{ $product->types == 'dell' ? 'selected' : '' }}>Dell</option>
+                                                    <option value="asus"
+                                                        {{ $product->types == 'asus' ? 'selected' : '' }}>Asus</option>
+                                                    <option value="acer"
+                                                        {{ $product->types == 'acer' ? 'selected' : '' }}>Acer</option>
+                                                    <option value="lenovo"
+                                                        {{ $product->types == 'lenovo' ? 'selected' : '' }}>Lenovo</option>
+                                                    <option value="macbook"
+                                                        {{ $product->types == 'macbook' ? 'selected' : '' }}>Macbook
+                                                    </option>
+                                                    <option value="khac" {{ $product->types == '' ? 'selected' : '' }}>
+                                                        Khác</option>
+                                                </select>
+
+                                            </div>
+                                            <div class="tab-pane fade" id="content-details-{{ $product->id }}"
+                                                role="tabpanel" aria-labelledby="content-details-{{ $product->id }}-tab"
+                                                tabindex="0">
                                                 <div class="form-group">
                                                     <label class="mb-3" for="">Nội dung</label>
                                                     <textarea name="content" class="form-control ckeditor ckeditor-content"> {!! $product->content !!}</textarea>
@@ -496,8 +546,10 @@
 
                                         </div>
                                         <div class="modal-footer">
-                                            <button type='submit' class='btn btn-success fw-semibold text-dark'>Cập nhật</button>
-                                            <button type="button" class="btn btn-secondary fw-semibold" data-bs-dismiss="modal">Đóng</button>
+                                            <button type='submit' class='btn btn-success fw-semibold text-dark'>Cập
+                                                nhật</button>
+                                            <button type="button" class="btn btn-secondary fw-semibold"
+                                                data-bs-dismiss="modal">Đóng</button>
                                         </div>
 
                                     </form>
@@ -512,5 +564,4 @@
             </div>
         </div>
     </div>
-
 @endsection

@@ -202,3 +202,50 @@ $(document).ready(function () {
 
 
 // });
+$(document).ready(function () {
+
+    // Toggle isHot
+    $(document).on('change', '.toggle-hot', function () {
+        const id = $(this).data('id');
+
+        $.ajax({
+            url: '/admin/products/toggle-hot',
+            type: 'POST',
+            data: { id: id },
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+
+            success: function (res) {
+                if (res.status === 'success') {
+                    console.log("Hot status changed:", res.ishot);
+                }
+            },
+
+            error: function () {
+                alert("Không thể cập nhật trạng thái Hot!");
+            }
+        });
+    });
+
+    // Toggle isOutOfStock
+    $(document).on('change', '.toggle-stock', function () {
+        const id = $(this).data('id');
+
+        $.ajax({
+            url: '/admin/products/toggle-stock',
+            type: 'POST',
+            data: { id: id },
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+
+            success: function (res) {
+                if (res.status === 'success') {
+                    console.log("Stock status changed:", res.isOutOfStock);
+                }
+            },
+
+            error: function () {
+                alert("Không thể cập nhật trạng thái kho!");
+            }
+        });
+    });
+
+});
