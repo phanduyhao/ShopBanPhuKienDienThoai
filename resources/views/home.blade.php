@@ -294,7 +294,7 @@
             </div>
         </div>
     </section>
-    <section class="latest spad">
+    {{-- <section class="latest spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -321,5 +321,5 @@
                 @endforeach
             </div>
         </div>
-    </section>
+    </section> --}}
 @endsection

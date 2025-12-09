@@ -32,8 +32,8 @@ class ProfileController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'phone' => 'required|string|max:15',
-            'sex' => 'required|string',
+            'phone' => 'nullable|string|max:15',
+            'sex' => 'nullable|string',
             'avatar' => 'nullable|image|max:2048', // Kiểm tra định dạng ảnh
         ]);
 

@@ -1,143 +1,237 @@
 @extends('layouts.layout')
 @section('content')
 
-<section class="bg-light py-5">
+<style>
+    .profile-sidebar {
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 30px 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        transition: 0.3s;
+    }
+
+    .profile-sidebar:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 25px rgba(0,0,0,0.12);
+    }
+
+    .profile-avatar {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #f1f1f1;
+        transition: 0.3s;
+    }
+
+    .profile-avatar:hover {
+        border-color: #0d6efd;
+        transform: scale(1.05);
+    }
+
+    .nav-profile .nav-link {
+        padding: 12px 16px;
+        font-size: 15px;
+        border-radius: 10px;
+        color: #555;
+        font-weight: 500;
+        transition: 0.25s;
+    }
+
+    .nav-profile .nav-link:hover,
+    .nav-profile .nav-link.active {
+        background: #0d6efd;
+        color: #fff !important;
+    }
+
+    .profile-card {
+        background: #fff;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    .input-field {
+        border-radius: 12px !important;
+        padding: 12px 14px !important;
+    }
+
+    .profile-upload-btn {
+        border-radius: 10px;
+        padding: 6px 14px;
+    }
+
+</style>
+
+<section class="py-5" style="background:antiquewhite;">
     <div class="container">
-        <div class="row">
-            <!-- Sidebar -->
+        <div class="row g-4">
+
+            <!-- SIDEBAR -->
             <div class="col-lg-3 col-md-4">
-                <div class="simple-sidebar sm-sidebar bg-white rounded-3 shadow-sm pt-0" id="filter_search">
-                    <div class="search-sidebar_header d-flex justify-content-between">
-                        <button onclick="closeFilterSearch()" class="btn btn-link">
-                            <i class="fa-regular fa-circle-xmark fs-5 text-muted-2"></i>
-                        </button>
-                    </div>
-                    
-                    <div class="sidebar-widgets">
-                        <div class="dashboard-navbar text-center pt-0">
-                            <div class="fr-grid-thumb mx-auto mt-5 mb-0">
-                                <a href="agent-page.html" class="d-inline-flex p-1 circle border">
-                                    <img src="{{ Auth::user()->avatar }}" width="150" class="img-fluid circle object-fit-cover" alt="avatar" style="height: 150px;">
-                                </a>
-                            </div>
-                            <div class="d-user-avater mt-3">
-                                <h4>{{ Auth::user()->name }}</h4>
-                                <span>{{ Auth::user()->email }}</span>
-                            </div>
-                            
-                            <div class="d-navigation mt-3">
-                                <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <a href="{{ route('profile.index') }}" class="nav-link active">
-                                            <i class="bi bi-house-door"></i> Thông tin cá nhân
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('myOrder') }}" class="nav-link">
-                                            <i class="bi bi-card-list"></i> Đơn mua
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('showChangePass') }}" class="nav-link">
-                                            <i class="bi bi-key"></i> Thay đổi mật khẩu
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            
-                        </div>
-                    </div>
+                <div class="profile-sidebar text-center">
+
+                    <img src="{{ Auth::user()->avatar }}"
+                         class="profile-avatar mb-3 shadow-sm"
+                         alt="avatar">
+
+                    <h5 class="fw-bold mb-1">{{ Auth::user()->name }}</h5>
+                    <small class="text-muted">{{ Auth::user()->email }}</small>
+
+                    <hr class="my-4">
+
+                    <ul class="nav flex-column nav-profile">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ route('profile.index') }}">
+                                <i class="bi bi-person-circle me-2"></i>Thông tin cá nhân
+                            </a>
+                        </li>
+
+                        <li class="nav-item mt-2">
+                            <a class="nav-link" href="{{ route('showChangePass') }}">
+                                <i class="bi bi-key me-2"></i>Thay đổi mật khẩu
+                            </a>
+                        </li>
+                    </ul>
+
                 </div>
             </div>
 
-            <!-- Main Content -->
+            <!-- MAIN PROFILE FORM -->
             <div class="col-lg-9 col-md-8">
-                <!-- Personal Information -->
-                <div class="dashboard-wrapper bg-white rounded-3 shadow-sm">
-                    <div class="form-submit">
-                        <h4 class="pt-3 px-3">Thông tin cá nhân</h4>
-                        <div class="error">
-                            @include('admin.error')
-                        </div>
-                        <form id="form-update-profile" method="POST" action="{{ route('profile.update', Auth::user()->id) }}" enctype="multipart/form-data" class="submit-section mt-3">
-                            @csrf
-                            <div class="row">
-                                <div class="col-md-4 col-12">
-                                    <div class="form-group col-12">
-                                        <div class="fr-grid-thumb mx-auto">
-                                            <!-- Avatar Preview -->
-                                            <label for="avatar-upload" class="d-inline-flex p-1 border cursor-pointer overflow-hidden">
-                                                <img id="avatar-preview" src="{{ Auth::user()->avatar }}" width="200" class="img-fluid object-fit-cover" alt="avatar" style="height: 200px; cursor: pointer;">
-                                            </label>
-                                            <!-- Hidden File Input -->
-                                            <input type="file" id="avatar-upload" name="avatar" class="d-none" accept="image/*" onchange="previewAvatar(event)">
-                                            <!-- Buttons -->
-                                            <div class="mt-2">
-                                                <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('avatar-upload').click()">Upload ảnh</button>
-                                            </div>
+                <div class="profile-card">
+
+                    <h4 class="fw-bold mb-4">Thông tin cá nhân</h4>
+
+                    @include('admin.error')
+
+                    <form method="POST"
+                          action="{{ route('profile.update', Auth::user()->id) }}"
+                          enctype="multipart/form-data"
+                          id="form-update-profile">
+                        @csrf
+
+                        <div class="row g-4">
+
+                            <!-- AVATAR -->
+                            <div class="col-md-4 text-center">
+                                <label for="avatar-upload" class="cursor-pointer">
+                                    <img id="avatar-preview"
+                                        src="{{ Auth::user()->avatar }}"
+                                        class="img-fluid rounded-4 shadow-sm"
+                                        style="width:220px;height:220px;object-fit:cover;cursor:pointer;">
+                                </label>
+
+                                <input type="file" id="avatar-upload"
+                                       name="avatar"
+                                       class="d-none"
+                                       accept="image/*"
+                                       onchange="previewAvatar(event)">
+
+                                <button type="button"
+                                        onclick="document.getElementById('avatar-upload').click()"
+                                        class="btn btn-secondary mt-3 profile-upload-btn">
+                                    <i class="bi bi-upload me-1"></i> Upload ảnh
+                                </button>
+                            </div>
+
+                            <!-- FORM FIELDS -->
+                            <div class="col-md-8 row g-4">
+
+                                <div class="col-md-6">
+                                    <label class="fw-semibold">Tên</label>
+                                    <input type="text"
+                                           name="name"
+                                           class="form-control input-field"
+                                           required
+                                           value="{{ Auth::user()->name }}">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="fw-semibold">Email</label>
+                                    <input type="email"
+                                           name="email"
+                                           class="form-control input-field"
+                                           required
+                                           value="{{ Auth::user()->email }}">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="fw-semibold">Số điện thoại</label>
+                                    <input type="text"
+                                           name="phone"
+                                           class="form-control input-field"
+                                           value="{{ Auth::user()->phone }}">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="fw-semibold">Giới tính</label>
+                                    <div class="d-flex gap-4 mt-2">
+
+                                        <div class="form-check mr-2">
+                                            <input type="radio"
+                                                   name="sex"
+                                                   id="sex-nam"
+                                                   class="form-check-input"
+                                                   value="nam"
+                                                   @checked(Auth::user()->sex=='nam')>
+                                            <label class="form-check-label" for="sex-nam">Nam</label>
                                         </div>
+
+                                        <div class="form-check mr-2">
+                                            <input type="radio"
+                                                   name="sex"
+                                                   id="sex-nu"
+                                                   class="form-check-input"
+                                                   value="nu"
+                                                   @checked(Auth::user()->sex=='nu')>
+                                            <label class="form-check-label" for="sex-nu">Nữ</label>
+                                        </div>
+
+                                        <div class="form-check">
+                                            <input type="radio"
+                                                   name="sex"
+                                                   id="sex-khac"
+                                                   class="form-check-input"
+                                                   value="khac"
+                                                   @checked(Auth::user()->sex=='khac')>
+                                            <label class="form-check-label" for="sex-khac">Khác</label>
+                                        </div>
+
                                     </div>
                                 </div>
 
-                                <div class="col-md-8 col-12 row">
-                                    <div class="form-group col-md-6">
-                                        <label>Tên</label>
-                                        <input type="text" class="form-control input-field" data-require='Mời nhập tên!' required name="name" value="{{ Auth::user()->name }}">
-                                    </div>
-                                    
-                                    <div class="form-group col-md-6">
-                                        <label>Email</label>
-                                        <input type="email" class="form-control input-field" data-require='Mời nhập email' required name="email" value="{{ Auth::user()->email }}">
-                                    </div>
-                                  
-                                    <div class="form-group col-md-6">
-                                        <label>Số điện thoại</label>
-                                        <input type="text" class="form-control input-field" data-require='Mời nhập số điện thoại' required name="phone" value="{{ Auth::user()->phone }}">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label>Giới tính</label>
-                                       <div class="d-flex align-items-center gap-3">
-                                            <div class="form-check mr-2">
-                                                <input class="form-check-input" type="radio" name="sex" value="nam" id="nam" {{ Auth::user()->sex == 'nam' ? 'checked' : '' }}>
-                                                <label class="form-check-label" for="nam">
-                                                    Nam
-                                                </label>
-                                            </div>
-                                            <div class="form-check mr-2">
-                                                <input class="form-check-input" type="radio" name="sex" value="nu" id="nu" {{ Auth::user()->sex == 'nu' ? 'checked' : '' }}>
-                                                <label class="form-check-label" for="nu">
-                                                    Nữ
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="sex" value="khac" id="khac" {{ Auth::user()->sex == 'khac' ? 'checked' : '' }}>
-                                                <label class="form-check-label" for="khac">
-                                                    Khác
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <button class="btn btn-primary w-auto float-end" type="submit">Cập nhật</button>
                             </div>
-                        </form>
-                    </div>
+
+                        </div>
+
+                        <div class="mt-4 text-end">
+                            <button class="btn btn-primary px-4 py-2"
+                                    style="border-radius:12px;font-size:16px;">
+                                Cập nhật
+                            </button>
+                        </div>
+
+                    </form>
+
                 </div>
             </div>
+
         </div>
     </div>
 </section>
+
 <script>
-    function previewAvatar(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('avatar-preview').src = e.target.result;
-            }
-            reader.readAsDataURL(file);
-        }
+function previewAvatar(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            document.getElementById('avatar-preview').src = e.target.result;
+        };
+        reader.readAsDataURL(file);
     }
-    </script>
+}
+</script>
+
 @endsection

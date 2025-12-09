@@ -7,7 +7,7 @@
                 <h5 class=" fw-bold">Danh sách sản phẩm</h5>
                 <div>
                     <button type="button" data-id="" class="btn btn-success text-dark px-2 py-1 fw-bolder" data-bs-toggle="modal" data-bs-target="#createProduct" >Thêm mới</button>
-                    <button type="button"class="btn btn-danger me-2 px-2 py-1 fw-bolder" data-bs-toggle="modal" data-bs-target="#deleteModalAll">Xóa tất cả</button>
+                    {{-- <button type="button"class="btn btn-danger me-2 px-2 py-1 fw-bolder" data-bs-toggle="modal" data-bs-target="#deleteModalAll">Xóa tất cả</button> --}}
                     <div class="modal fade" id="deleteModalAll" tabindex="-1" aria-labelledby="deleteModalAllLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -65,13 +65,13 @@
                                             <label
                                                 class='form-label'
                                                 for='basic-default-fullname'
-                                            >Tiêu đề</label>
+                                            >Tên sản phẩm</label>
                                             <input
                                                 type='text'
                                                 class='form-control title input-field '
                                                 id='title-store'
-                                                placeholder='Nhập tiêu đề'
-                                                name='title' data-require='Mời nhập Tiêu đề'
+                                                placeholder='Nhập Tên sản phẩm'
+                                                name='title' data-require='Mời nhập Tên sản phẩm'
                                             />
                                         </div>
                                         <div class='mb-3 w-100'>
@@ -84,22 +84,23 @@
                                                     class='form-control slug input-field'
                                                     id='slug-store'
                                                     placeholder='Nhập Slug'
+                                                    readonly
                                                     name='slug' data-require='Mời nhập Slug'
                                                 />
                                             </div>
-                                        <div class='mb-3'>
+                                        {{-- <div class='mb-3'>
                                             <div class="form-group">
                                                 <label class="mb-3" for="">Mô tả</label>
                                                 <textarea name="desc" class="form-control ckeditor-desc ckeditor"></textarea>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="form-group mb-3">
                                             <label class='form-label'
                                                    for='basic-default-email'>Danh mục</label>
                                             <select name="cate_id" class="form-control" id="cate_id">
                                                 <option value="">Chọn danh mục</option>
                                                 @foreach($cates as $cate)
-                                                    <option value="{{ $cate->id }}">{{ $cate->id }}-{{ $cate->title }}</option>
+                                                    <option value="{{ $cate->id }}">{{ $cate->id }} - {{ $cate->parent?->title }} - {{ $cate->title }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -122,7 +123,7 @@
                                                 <label
                                                     class='form-label'
                                                     for='basic-default-email'
-                                                >Giá giảm ( VND )</label>
+                                                >Giá bán ra ( VND )</label>
                                                 <div class='input-group input-group-merge'>
                                                     <input
                                                         type='text'
@@ -132,7 +133,21 @@
                                                     />
                                                 </div>
                                             </div>
-                                            <div class=''>
+                                            <div class='me-3'>
+                                                <label
+                                                    class='form-label'
+                                                    for='basic-default-email'
+                                                >Giá thợ ( VND )</label>
+                                                <div class='input-group input-group-merge'>
+                                                    <input
+                                                        type='text'
+                                                        id='workerPrice'
+                                                        class='form-control'
+                                                        name='workerPrice'
+                                                    />
+                                                </div>
+                                            </div>
+                                            {{-- <div class=''>
                                                 <label
                                                     class='form-label'
                                                     for='basic-default-email'
@@ -145,17 +160,26 @@
                                                         name='amount'
                                                     />
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                         <div class="d-flex mb-3 ">
                                             <div class="form-check me-3">
                                                 <input class="form-check-input" type="checkbox" id="ishot" name="ishot">
-                                                <label class="form-check-label" for="defaultCheck3"> Đang Hot </label>
+                                                <label class="form-check-label" for="ishot"> Đang Hot </label>
                                             </div>
                                         </div>
                                         <div id="newType" class="mb-3">
-                                            <label class='form-label'>Phân loại ( ngăn cách bởi dấu phẩy )</label>
-                                            <input type='text' class='form-control ' placeholder='Nhập giá trị (vd: Loại A, Loại B, Loại C)' name='types' />
+                                            <label class='form-label'>Hãng ( Hp/ Dell / Asus/ Acer )</label>
+                                             <select name="types" class="form-control" id="types">
+                                                <option value="">Chọn Hãng</option>
+                                                <option value="hp">Hp</option>
+                                                <option value="dell">Dell</option>
+                                                <option value="asus">Asus</option>
+                                                <option value="acer">Acer</option>
+                                                <option value="lenovo">Lenovo</option>
+                                                <option value="macbook">Macbook</option>
+                                                <option value="">Khác</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="content-details" role="tabpanel" aria-labelledby="content-details-tab" tabindex="0">
@@ -182,20 +206,23 @@
                     </div>
                 </div>
             </div>
-            <div class="table-responsive">
+            <div class="table-responsive t table-bordered">
                 <table class="table">
                     <thead>
                     <tr>
                         <th>STT</th>
                         <th>Ảnh</th>
-                        <th>Tiêu đề</th>
+                        <th>Tên sản phẩm</th>
                         <th>Danh mục</th>
                         <th>Giá gốc</th>
                         <th>Giá giảm</th>
-                        <th>Hoạt động</th>
+                        <th>Giá Thợ</th>
+                        {{-- <th>Hoạt động</th> --}}
                         <th>Đang Hot</th>
-                        <th>Mới nhất</th>
-                        <th>Số lượng</th>
+                        <th>Còn hàng ?</th>
+                        <th>Lượt xem</th>
+                        {{-- <th>Mới nhất</th> --}}
+                        {{-- <th>Số lượng</th> --}}
                         <th>Thao tác</th>
 
                     </tr>
@@ -210,21 +237,22 @@
                             <td width="250px">{{$product->Title}}</td>
                             <td>
                                 @if($product->cate_id != null)
-                                    {{$product->Category->title ?? ''}}
+                                    {{$product->Category->title ?? ''}} - {{ $product->company }}
                                 @else
                                     Chưa chọn danh mục
                                 @endif
                             </td>
                             <td>{{ number_format($product->price) }} VNĐ</td>
                             <td>{{ number_format($product->discount) }} VNĐ</td>
+                            <td>{{ number_format($product->workerPrice) }} VNĐ</td>
 
-                            <td>
+                            {{-- <td>
                                 @if($product->active == 1)
                                     <i class='bx bxs-circle text-success'></i>
                                 @else
                                     <i class='bx bxs-circle text-danger'></i>
                                 @endif
-                            </td>
+                            </td> --}}
                             <td>
                                 @if($product->ishot == 1)
                                     <i class='bx bxs-circle text-success'></i>
@@ -232,16 +260,26 @@
                                     <i class='bx bxs-circle text-danger'></i>
                                 @endif
                             </td>
-                            <td>
-                                @if($product->isnewfeed == 1)
+                             <td>
+                                @if($product->isOutOfStock == 1)
                                     <i class='bx bxs-circle text-success'></i>
                                 @else
                                     <i class='bx bxs-circle text-danger'></i>
                                 @endif
                             </td>
                             <td>
-                                {{ $product->Amounts }}
+                                {{$product->view}}
                             </td>
+                            {{-- <td>
+                                @if($product->isnewfeed == 1)
+                                    <i class='bx bxs-circle text-success'></i>
+                                @else
+                                    <i class='bx bxs-circle text-danger'></i>
+                                @endif
+                            </td> --}}
+                            {{-- <td>
+                                {{ $product->Amounts }}
+                            </td> --}}
                             <td class="">
                                 <button type="button" data-url="/admin/products/{{$product->id}}" data-id="{{$product->id}}" class="btn btn-danger btnDeleteAsk me-2 px-2 py-1 fw-bolder" data-bs-toggle="modal" data-bs-target="#deleteModal">Xóa</button>
                                 <button type="button" data-id="{{$product->id}}" class="btn btn-edit btn-info btnEditProduct text-dark px-2 py-1 fw-bolder" data-bs-toggle="modal" data-bs-target="#editProduct{{$product->id}}">Sửa</button>
@@ -267,7 +305,7 @@
                     </tbody>
                 </table>
 
-{{--                Sửa --}}
+                {{--                Sửa --}}
                 @foreach($products as $product)
                     <div class="modal fade" id="editProduct{{$product->id}}" aria-labelledby="editProduct{{$product->id}}Label" style="overflow-x:hidden !important">
                         <div class="modal-dialog" style="max-width: 1440px">
@@ -305,14 +343,14 @@
                                                     <label
                                                         class='form-label'
                                                         for='basic-default-fullname'
-                                                    >Tiêu đề</label>
+                                                    >Tên sản phẩm</label>
                                                     <input
                                                         type='text'
                                                         class='form-control title input-field '
                                                         id='title-edit-{{$product->id}}'
-                                                        placeholder='Nhập tiêu đề'
+                                                        placeholder='Nhập Tên sản phẩm'
                                                         value="{{$product->Title}}"
-                                                        name='title' data-require='Mời nhập Tiêu đề'
+                                                        name='title' data-require='Mời nhập Tên sản phẩm'
                                                     />
                                                 </div>
                                                 <div class='mb-3 w-100'>
@@ -329,12 +367,12 @@
                                                         name='slug' data-require='Mời nhập Slug'
                                                     />
                                                 </div>
-                                                <div class='mb-3'>
+                                                {{-- <div class='mb-3'>
                                                     <div class="form-group">
                                                         <label class="mb-3" for="">Mô tả</label>
                                                         <textarea name="desc" class="form-control ckeditor-desc ckeditor"> {!! $product->description !!}</textarea>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                                 <div class="form-group mb-3">
                                                     <label class='form-label'
                                                            for='basic-default-email'>Danh mục</label>
@@ -369,7 +407,7 @@
                                                         <label
                                                             class='form-label'
                                                             for='basic-default-email'
-                                                        >Giá giảm ( VND )</label>
+                                                        >Giá bán ra ( VND )</label>
                                                         <div class='input-group input-group-merge'>
                                                             <input
                                                                 type='text'
@@ -380,7 +418,22 @@
                                                             />
                                                         </div>
                                                     </div>
-                                                    <div class=''>
+                                                    <div class='me-3'>
+                                                        <label
+                                                            class='form-label'
+                                                            for='basic-default-email'
+                                                        >Giá thợ( VND )</label>
+                                                        <div class='input-group input-group-merge'>
+                                                            <input
+                                                                type='text'
+                                                                id='workerPrice-{{$product->id}}'
+                                                                value="{{$product->workerPrice}}"
+                                                                class='form-control'
+                                                                name='workerPrice'
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    {{-- <div class=''>
                                                         <label
                                                             class='form-label'
                                                             for='basic-default-email'
@@ -394,17 +447,17 @@
                                                                 name='amount'
                                                             />
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                                 <div class="d-flex mb-3 ">
-                                                    <div class="form-check me-3">
+                                                    {{-- <div class="form-check me-3">
                                                         @if($product->active == 1)
                                                             <input class="form-check-input" type="checkbox" checked name="active">
                                                         @else
                                                             <input class="form-check-input" type="checkbox" name="active">
                                                         @endif
                                                             <label class="form-check-label" for="defaultCheck3"> Hoạt động </label>
-                                                    </div>
+                                                    </div> --}}
                                                     <div class="form-check me-3">
                                                         @if($product->ishot == 1)
                                                             <input class="form-check-input" type="checkbox" checked name="ishot">

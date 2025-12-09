@@ -64,11 +64,11 @@
                 <div data-i18n='Layouts'>Quản lý sản phẩm</div>
             </a>
         </li>
-        <li class='menu-item'>
+        {{-- <li class='menu-item'>
             <a href='{{route('posts.index')}}' class='menu-link '>
                 <i class='menu-icon tf-icons bx bx-news'></i>
                 <div data-i18n='Layouts'>Quản lý bài viết</div>
             </a>
-        </li>
+        </li> --}}
     </ul>
 </aside>

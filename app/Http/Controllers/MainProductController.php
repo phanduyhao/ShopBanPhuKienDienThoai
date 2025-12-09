@@ -93,7 +93,8 @@ class MainProductController extends Controller
         $loadMoreCommentsCount = 5;
         $comments = Comment::where('product_id', $product->id)->take($initialCommentsCount)->get();
         $types = array_filter(array_map('trim', explode(',', $product->types ?? '')));
-
+        $product->view += 1;
+        $product->save();
         return view('product.details',compact('product','new_products','comments','initialCommentsCount','loadMoreCommentsCount','types'),[
             'title' => $title
         ]);

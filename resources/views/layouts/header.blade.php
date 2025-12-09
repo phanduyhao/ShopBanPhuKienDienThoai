@@ -1,31 +1,30 @@
-
 <style>
     /* Hiện dropdown cấp 1 khi hover */
-.nav-item.dropdown:hover > .dropdown-menu {
-    display: flex;
-    flex-direction: column;
-}
+    .nav-item.dropdown:hover>.dropdown-menu {
+        display: flex;
+        flex-direction: column;
+    }
 
-/* Hiện dropdown cấp 2 khi hover */
-.dropdown-submenu:hover > .sub-dropdown-menu {
-    display: flex;
-    flex-direction: column;    left: 100%;
-    top: 0;
-}
+    /* Hiện dropdown cấp 2 khi hover */
+    .dropdown-submenu:hover>.sub-dropdown-menu {
+        display: flex;
+        flex-direction: column;
+        left: 100%;
+        top: 0;
+    }
 
-/* Căn chỉnh dropdown con */
-.dropdown-submenu {
-    position: relative;
-}
+    /* Căn chỉnh dropdown con */
+    .dropdown-submenu {
+        position: relative;
+    }
 
-.sub-dropdown-menu {
-    position: absolute;
-    display: none;
-    min-width: 200px;
-}
-
+    .sub-dropdown-menu {
+        position: absolute;
+        display: none;
+        min-width: 200px;
+    }
 </style>
-<header class="header">
+<header class="header border-bottom shadow-sm">
     <!-- Top bar -->
     <div class="header__top py-2 border-bottom d-block">
         <div class="container">
@@ -86,49 +85,49 @@
                         </li>
 
                         <li class="nav-item dropdown position-relative">
-    <a class="nav-link fw-semibold dropdown-toggle" href="{{ route('products.shop') }}">
-        Cửa hàng
-    </a>
+                            <a class="nav-link fw-semibold dropdown-toggle" href="{{ route('products.shop') }}">
+                                Cửa hàng
+                            </a>
 
-    <ul class="dropdown-menu rounded-3 shadow-lg fade-menu p-2 position-absolute" style="top: 20px">
+                            <ul class="dropdown-menu rounded-3 shadow-lg fade-menu p-2 position-absolute"
+                                style="top: 20px">
 
-        @foreach ($menus as $menu)
-            @if ($menu->parent_id == null)
+                                @foreach ($menus as $menu)
+                                    @if ($menu->parent_id == null)
+                                        <li class="dropdown-submenu px-2 py-1 position-relative w-100">
+                                            <a class="dropdown-item fw-semibold d-flex justify-content-between"
+                                                href="{{ route('products.showProduct', ['categorySlug' => $menu->slug]) }}">
+                                                {{ $menu->title }}
+                                            </a>
 
-                <li class="dropdown-submenu px-2 py-1 position-relative w-100">
-                    <a class="dropdown-item fw-semibold d-flex justify-content-between"
-                       href="{{ route('products.showProduct', ['categorySlug' => $menu->slug]) }}">
-                        {{ $menu->title }}
-                    </a>
+                                            @if ($menu->children->isNotEmpty())
+                                                <ul class="dropdown-menu rounded-3 shadow sub-dropdown-menu p-2 position-absolute"
+                                                    style="left:75%">
+                                                    @foreach ($menu->children as $child)
+                                                        <li class="py-1">
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('products.showProduct', ['categorySlug' => $child->slug]) }}">
+                                                                {{ $child->title }}
+                                                            </a>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            @endif
+                                        </li>
+                                    @endif
+                                @endforeach
 
-                    @if ($menu->children->isNotEmpty())
-                        <ul class="dropdown-menu rounded-3 shadow sub-dropdown-menu p-2 position-absolute" style="left:75%">
-                            @foreach ($menu->children as $child)
-                                <li class="py-1">
-                                    <a class="dropdown-item"
-                                       href="{{ route('products.showProduct', ['categorySlug' => $child->slug]) }}">
-                                        {{ $child->title }}
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @endif
-                </li>
-
-            @endif
-        @endforeach
-
-    </ul>
-</li>
+                            </ul>
+                        </li>
 
 
                         <li class="nav-item">
                             <a href="/about" class="nav-link fw-semibold">Giới thiệu</a>
                         </li>
 
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="{{ route('post') }}" class="nav-link fw-semibold">Bài viết</a>
-                        </li>
+                        </li> --}}
 
                         <li class="nav-item">
                             <a href="/contact" class="nav-link fw-semibold">Liên hệ</a>
@@ -227,8 +226,11 @@
                         <li class="py-1"><a href="{{ route('profile.index') }}" class="sidebar-link d-block">Trang
                                 cá nhân</a></li>
                         <li class="py-1">
-                            <form action="{{ route('logout') }}" method="post" class="m-0 sidebar-link d-block py-0">
-                                <input type="hidden" name="_token" value="anAMJ0QcoeOZJDBNyH2zp7pENXEZpPcSOD1AwuS0" autocomplete="off">                                <button type="submit" class="border-0 bg-transparent" fdprocessedid="uh08z">Đăng xuất</button>
+                            <form action="{{ route('logout') }}" method="post"
+                                class="m-0 sidebar-link d-block py-0">
+                                <input type="hidden" name="_token" value="anAMJ0QcoeOZJDBNyH2zp7pENXEZpPcSOD1AwuS0"
+                                    autocomplete="off"> <button type="submit" class="border-0 bg-transparent"
+                                    fdprocessedid="uh08z">Đăng xuất</button>
                             </form>
                         </li>
                     </ul>
@@ -244,7 +246,9 @@
 
         <ul class="list-unstyled m-0">
             <li class="mb-2">
-                <a href="/" class="shop-toggle btn btn-light w-100 d-flex justify-content-between align-items-center py-2">Trang chủ</a>
+                <a href="/"
+                    class="shop-toggle btn btn-light w-100 d-flex justify-content-between align-items-center py-2">Trang
+                    chủ</a>
             </li>
 
             <!-- Shop with collapsible children -->
@@ -262,14 +266,15 @@
                             @if ($menu->children->isNotEmpty())
                                 <!-- If has children, make an inner toggler -->
                                 <li class="py-1">
-                                    <button class="inner-toggle btn btn-sm d-flex justify-content-between align-items-center w-100" aria-label="Mở {{ $menu->title }}"
-                                        data-target="#sub-{{ $menu->id }}">
+                                    <button
+                                        class="inner-toggle btn btn-sm d-flex justify-content-between align-items-center w-100"
+                                        aria-label="Mở {{ $menu->title }}" data-target="#sub-{{ $menu->id }}">
                                         {{ $menu->title }}
                                         <i class="fa fa-chevron-right"></i>
                                     </button>
 
-                                    <ul id="sub-{{ $menu->id }}" class="list-unstyled ml-3 border-0 mt-2 sub-menu"
-                                        style="display:none;">
+                                    <ul id="sub-{{ $menu->id }}"
+                                        class="list-unstyled ml-3 border-0 mt-2 sub-menu" style="display:none;">
                                         @foreach ($menu->children as $child)
                                             <li class="py-1">
                                                 <a class="sidebar-link small d-block"
@@ -294,15 +299,21 @@
             </li>
 
             <li class="mb-2">
-                <a href="/about" class="shop-toggle btn btn-light w-100 d-flex justify-content-between align-items-center py-2">Giới thiệu</a>
+                <a href="/about"
+                    class="shop-toggle btn btn-light w-100 d-flex justify-content-between align-items-center py-2">Giới
+                    thiệu</a>
             </li>
 
             <li class="mb-2">
-                <a href="{{ route('post') }}" class="shop-toggle btn btn-light w-100 d-flex justify-content-between align-items-center py-2">Bài viết</a>
+                <a href="{{ route('post') }}"
+                    class="shop-toggle btn btn-light w-100 d-flex justify-content-between align-items-center py-2">Bài
+                    viết</a>
             </li>
 
             <li class="mb-2">
-                <a href="/contact" class="shop-toggle btn btn-light w-100 d-flex justify-content-between align-items-center py-2">Liên hệ</a>
+                <a href="/contact"
+                    class="shop-toggle btn btn-light w-100 d-flex justify-content-between align-items-center py-2">Liên
+                    hệ</a>
             </li>
         </ul>
     </nav>
@@ -338,7 +349,7 @@
             // reset chevrons
             document.querySelectorAll(
                 "#mobileSidebar .account-toggle i, #mobileSidebar .shop-toggle i, #mobileSidebar .inner-toggle i"
-                ).forEach(ic => {
+            ).forEach(ic => {
                 ic.classList.remove("rotated");
             });
         }

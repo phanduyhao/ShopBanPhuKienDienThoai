@@ -12,7 +12,11 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $cates = Category::all();
+        $cates = Category::whereNotIn('id', function($query) {
+            $query->select('parent_id')
+                ->from('categories')
+                ->whereNotNull('parent_id');
+        })->get();
         $products = Product::orderByDesc('id')->paginate(10);
         return view('admin.product.index',compact('products','cates'),[
             'title' => 'Quản lý sản phẩm'

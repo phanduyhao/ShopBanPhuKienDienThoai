@@ -13,17 +13,7 @@
                                 <div class='card-body'>
                                     <h5
                                         class='card-title text-primary'
-                                    >Chúc Mừng {{ Auth::user()->name }}! 🎉</h5>
-                                    <p class='mb-4'>
-                                        Hôm nay bạn đã bán được nhiều hơn 
-                                        <span class='fw-bold'>72%</span>
-                                        Kiểm tra huy hiệu mới của bạn trong.
-                                        Hồ sơ của bạn.
-                                    </p>
-                                    <a
-                                        href='javascript:;'
-                                        class='btn btn-sm btn-outline-primary'
-                                    >Xem Huy Hiệu</a>
+                                    >Xin chào {{ Auth::user()->name }}! 🎉</h5>
                                 </div>
                             </div>
                             <div class='col-sm-5 text-center text-sm-left'>
@@ -43,7 +33,7 @@
                 <div class='col-12 order-1'>
                     <h3>Thống kê</h3>
                     <div class='row'>
-                        <div class="col-lg-4 col-md-12 col-6 mb-4">
+                        {{-- <div class="col-lg-4 col-md-12 col-6 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="card-title d-flex align-items-start justify-content-between">
@@ -96,7 +86,7 @@
                                     <h3 class="card-title mb-2">{{ number_format((float)str_replace(',', '', $tongdoanhthuHomNay), 0, ',', '.') }} đ</h3>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-lg-3 col-md-12 col-6 mb-4">
                             <div class="card">
                                 <div class="card-body">
@@ -151,7 +141,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-12 col-6 mb-4">
+                        {{-- <div class="col-lg-3 col-md-12 col-6 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="card-title d-flex align-items-start justify-content-between">
@@ -168,7 +158,7 @@
                                     <h3 class="card-title mb-2">{{$count_type_product}}</h3>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-lg-3 col-md-12 col-6 mb-4">
                             <div class="card">
                                 <div class="card-body">
@@ -187,7 +177,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-12 col-6 mb-4">
+                        {{-- <div class="col-lg-3 col-md-12 col-6 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="card-title d-flex align-items-start justify-content-between">
@@ -204,8 +194,8 @@
                                     <h3 class="card-title mb-2">{{$count_order}}</h3>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-3 col-md-12 col-6 mb-4">
+                        </div> --}}
+                        {{-- <div class="col-lg-3 col-md-12 col-6 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="card-title d-flex align-items-start justify-content-between">
@@ -222,7 +212,7 @@
                                     <h3 class="card-title mb-2">{{$count_post}}</h3>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                     </div>
                 </div>
